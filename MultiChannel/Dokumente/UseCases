@@ -1,0 +1,3 @@
+- Person 1 schickt eine Nachricht an Person 2. Person 2 empfängt die Nachricht und schickt eine Empfangsbestätigung
+- Person 1 schickt eine Nachricht an person 2. Person 2 erhält die Nachricht nicht und Person 1 erhält keine Empfangsbestätigung.
+- Eine Person bekommt eine Nachricht aufgrund eines bevorstehenden Termins.
