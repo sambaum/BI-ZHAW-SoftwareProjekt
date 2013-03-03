@@ -1,3 +1,32 @@
-- Person 1 schickt eine Nachricht an Person 2. Person 2 empfängt die Nachricht und schickt eine Empfangsbestätigung
-- Person 1 schickt eine Nachricht an person 2. Person 2 erhält die Nachricht nicht und Person 1 erhält keine Empfangsbestätigung.
-- Eine Person bekommt eine Nachricht aufgrund eines bevorstehenden Termins.
+Main Use-Cases:
+----------------------------------------
+Voraussetzungen:
+- User, Gruppen und Termine sind statisch und weren aus einer anderen Quelle eingelesen (Datenbank oder File)
+
+Use-Cases:
+- User 1 schickt eine Nachricht an User 2 (siehe Nachricht senden)
+	- User 2 empfängt die Nachricht und schickt eine Empfangsbestätigung
+	- User 2 erhält die Nachricht nicht und schickt keine Empfangsbestätigung.
+- Ein Termin löst eine Nachricht aus (Erinnerung), (siehe Nachricht senden)
+- User 1 schickt eine Nachricht an eine Gruppe (siehe Nachricht senden)
+	- Personen die die Nachricht empfangen, shicken eine Empfangsbestätigung.
+
+Nachricht senden:
+- Absenden auswählen
+- Empfänger auswähen (User oder Gruppe)
+- Transportmedium auswählen
+- Nachricht eintippen
+- Empfangsbestätigung Flag set/unset
+- Auf Senden drücken
+- Nachricht inkl. aller Settings wird auf der Konsole ausgegeben
+- Die Zeile wird interpretiert und die Nachricht anschliessen zugestellt (Simulation auf der Konsole)
+- User welche eine Nachricht erhalten haben, schicken eine Empfangsbestätigung (siehe Nachricht senden)
+
+
+mögliche erweiterte Used-Cases:
+----------------------------------------
+- User erfassen/löchen/mutieren
+- Termine erfassen/löchen/mutieren
+- Gruppen erfassen/löchen/mutieren
+- Inbox
+- Nachrichten History
