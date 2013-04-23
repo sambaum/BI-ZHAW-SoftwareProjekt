@@ -4,6 +4,12 @@
  * 
  */
 
-public class SMS {
+public class SMS extends Message{
+
+	//Constructor
+	public SMS(User recipient, User sender, String message, String date) {
+		super(recipient, sender, message, date);
+		// TODO Auto-generated constructor stub
+	}
 
 }

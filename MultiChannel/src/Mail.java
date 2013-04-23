@@ -4,6 +4,12 @@
  * 
  */
 
-public class Mail {
+public class Mail extends Message{
+
+	//constructor
+	public Mail(User recipient, User sender, String message, String date) {
+		super(recipient, sender, message, date);
+		// TODO Auto-generated constructor stub
+	}
 
 }
