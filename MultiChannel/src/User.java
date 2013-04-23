@@ -16,3 +16,4 @@ public class User {
 	private ArrayList<Mail> mailBox;
 	private ArrayList<Print> printBox;
 }
+//test Zeile 1
