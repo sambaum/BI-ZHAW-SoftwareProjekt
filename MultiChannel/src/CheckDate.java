@@ -5,5 +5,11 @@
  */
 
 public class CheckDate implements Check{
+
+	@Override
+	public boolean check(String stringToCheck) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }
