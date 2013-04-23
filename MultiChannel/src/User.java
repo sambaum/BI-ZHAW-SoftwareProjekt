@@ -3,11 +3,8 @@ import java.util.ArrayList;
 /**
  * Hier kommt unsere Doku für diese Klasse hin.
  * @author Samuel
- * Test
+ * 
  */
-
-// bla bla bla
-// bla bla
 
 public class User {
 	private String userName;
@@ -19,13 +16,3 @@ public class User {
 	private ArrayList<Mail> mailBox;
 	private ArrayList<Print> printBox;
 }
-
-
-// bla 
-// bla dfasfasdf
-
-//test Zeile 1
-//bla1
-//Test Zeile 2
-//bla 2
-//Test gugus
