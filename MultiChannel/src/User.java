@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * Hier kommt unsere Doku für diese Klasse hin.
  * @author Samuel
- *
+ * Test
  */
 
 public class User {
