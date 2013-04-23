@@ -11,7 +11,7 @@ public class User {
 	private String group;
 	private String tel;
 	private String email;
-	private String druckerName;
+	private String printerName;
 	private ArrayList<SMS> smsBox;
 	private ArrayList<Mail> mailBox;
 	private ArrayList<Print> printBox;
