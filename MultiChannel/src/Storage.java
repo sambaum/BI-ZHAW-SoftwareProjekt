@@ -5,7 +5,7 @@
  */
 
 public interface Storage {
-	abstract void write(Storable objectToWrite);
-	abstract void read(Storable objectToRead);
-	abstract void delete(Storable objectToDelete);
+	 void write(Storable objectToWrite);
+	 void read(Storable objectToRead);
+	 void delete(Storable objectToDelete);
 }

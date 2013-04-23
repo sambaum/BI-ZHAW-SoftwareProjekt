@@ -6,6 +6,6 @@
 
 public interface Check {
 
-	abstract boolean check(String stringToCheck);
+	boolean check(String stringToCheck);
 	
 }
