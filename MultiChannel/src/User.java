@@ -6,6 +6,9 @@ import java.util.ArrayList;
  * Test
  */
 
+// bla bla bla
+// bla bla
+
 public class User {
 	private String userName;
 	private String group;
