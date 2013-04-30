@@ -1,6 +1,6 @@
 /**
  * Argumente (Input): Objekt des Typs Message
- * Return-Werte (Output): void
+ * Return-Werte (Output): boolean
  * 
  * Diese Klasse nimmt StoreMessage Objekte entgegen und speichert diese in einem File ab.
  * Diese Klasse liest verhandene Files und erstellt daraus Objekte
