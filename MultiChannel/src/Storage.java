@@ -5,7 +5,7 @@
  */
 
 public interface Storage {
-	 void write(Storable objectToWrite);
-	 void read(Storable objectToRead);
-	 void delete(Storable objectToDelete);
+	 boolean write(Storable objectToWrite);
+	 boolean read(Storable objectToRead);
+	 boolean delete(Storable objectToDelete);
 }
