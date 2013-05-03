@@ -1,6 +1,5 @@
 import static org.junit.Assert.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -9,14 +8,14 @@ import org.junit.Test;
 
 
 public class StoreMessageTest {
-	
+
 	private ArrayList<SMS> smsbox;
 	private ArrayList<Mail> mailbox;
 	private ArrayList<Print> printbox;
 	private User user1;
 	private User user2;
 	private StoreMessage storeMes1;
-
+	
 	@Before
 	public void setUp() throws Exception {
 		smsbox = new ArrayList<SMS>();
@@ -32,9 +31,8 @@ public class StoreMessageTest {
 	}
 
 	@Test
-	public void testWrite() throws IOException {
-		assertEquals(true, storeMes1.write(user1));
-		//fail("Not yet implemented");
+	public void testWrite() {
+		fail("Not yet implemented");
 	}
 
 	@Test
@@ -43,10 +41,8 @@ public class StoreMessageTest {
 	}
 
 	@Test
-	public void testDelete() throws IOException, InterruptedException {
-		assertEquals(true, storeMes1.write(user2));
-		assertEquals(true, storeMes1.delete(user2));
-		//fail("Not yet implemented");
+	public void testDelete() {
+		fail("Not yet implemented");
 	}
 
 }

@@ -20,23 +20,25 @@ public class User {
 	
 	//Konstruktor
 	public User(String userName, String group, String tel, String email,
-			String printerName, ArrayList<SMS> smsBox, ArrayList<Mail> mailBox,
-			ArrayList<Print> printBox) {
+			String printerName) {
 		this.userName = userName;
 		this.group = group;
 		this.tel = tel;
 		this.email = email;
 		this.printerName = printerName;
-		this.smsBox = smsBox;
-		this.mailBox = mailBox;
-		this.printBox = printBox;
+		this.smsBox = new ArrayList<SMS>();
+		this.mailBox = new ArrayList<Mail>();
+		this.printBox = new ArrayList<Print>();
+	}
+	
+	public void addSMS(SMS sms) {
+		smsBox.add(sms);
 	}
 	
 	// getter & setter section
 	public String getUserName() {
 		return userName;
 	}
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
