@@ -35,6 +35,14 @@ public class User {
 		smsBox.add(sms);
 	}
 	
+	public void addPrint(Print print) {
+		printBox.add(print);
+	}
+	
+	public void addMail(Mail mail) {
+		mailBox.add(mail);
+	}
+	
 	// getter & setter section
 	public String getUserName() {
 		return userName;

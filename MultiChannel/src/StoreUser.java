@@ -38,22 +38,24 @@ public class StoreUser {
 	}
 
 	private boolean messageWriter(User user) throws IOException {
+		ArrayList<Message> messageList = new ArrayList<Message>();
+		messageList.addAll(user.getSmsBox());
+		messageList.addAll(user.getMailBox());
+		messageList.addAll(user.getPrintBox());
 		FileWriter writer = null;
-		ArrayList<SMS> smsList = user.getSmsBox();
-		for (SMS sms : smsList) {
-			ArrayList<String> smsString = objectToStringMessage(sms);
-			String fileName = generateFileNameMessage(user, sms);
+		for (Message message : messageList) {
+			ArrayList<String> messageString = objectToStringMessage(message);
+			String fileName = generateFileNameMessage(user, message);
 			try {
 				writer = new FileWriter(fileName);
-				for (String fields : smsString) {
+				for (String fields : messageString) {
 					writer.write(fields);
-					System.out.println(fields);
 					writer.write("\n");
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
-			}finally {
+			} finally {
 				writer.close();
 			}
 		}
@@ -94,7 +96,7 @@ public class StoreUser {
 	}
 
 	private String generateFileNameMessage(User user, Message message) {
-		return "message_" + user.getUserName() + "_" + message.getClass() + ".txt";
+		return "message_" + user.getUserName() + "_" + message.getClass()
+				+ message.getDate() + ".txt";
 	}
-
 }
