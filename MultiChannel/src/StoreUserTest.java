@@ -60,10 +60,10 @@ public class StoreUserTest {
 		user1 = null;
 		// user auf file lesen
 		assertEquals(true, storeUser1.read());
-		// überprüfen ob der user wieder vorhanden ist
+		// ueberpruefen ob der user wieder vorhanden ist
 		user1 = storeUser1.returnUserObjectFromUserName(userName);
 		assertEquals("baumgsam", user1.getUserName());
-		// überprüfen ob User Messages hat.
+		// ueberpruefen ob User Messages hat.
 		assertNotNull(user1.getSmsBox());
 	}
 

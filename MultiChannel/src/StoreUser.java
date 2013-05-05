@@ -12,13 +12,13 @@ import java.util.HashMap;
  * Argumente (Input): Objekt des Typs Message Return-Werte (Output): boolean
  * 
  * Diese Klasse nimmt User Objekte entgegen und speichert diese in einem File
- * ab. Es werden die dazugehörigen Messages ebenfalls abgespeichert. Alles Files
- * sind in einem Text-Format und können mit einem normalen Text-Editor geöffnet
+ * ab. Es werden die dazugehoerigen Messages ebenfalls abgespeichert. Alles Files
+ * sind in einem Text-Format und koennen mit einem normalen Text-Editor geoeffnet
  * und selber editiert werden.
  * 
  * Diese Klasse liest verhandene Files und erstellt daraus Objekte. Die Files
  * haben folgende Namens-konvention: message_[Message-Typ]_user_[Sende-Datum]
- * Beispiel für einen File-Name eines SMS von einem User Frodo:
+ * Beispiel fuer einen File-Name eines SMS von einem User Frodo:
  * message_sms_frodo_20130501_235526
  * 
  * @author Samuel
@@ -26,7 +26,7 @@ import java.util.HashMap;
  */
 public class StoreUser {
 
-	//Variable welche nach dem Einlesen eine Liste von allen eingelesenen Usern enthält. Zu erkennen mit dem userNamen
+	//Variable welche nach dem Einlesen eine Liste von allen eingelesenen Usern enthaelt. Zu erkennen mit dem userNamen
 	private HashMap<String, User> AllUsersListMap;
 	private ArrayList<String> AllUserNameList;
 	
@@ -82,7 +82,7 @@ public class StoreUser {
 		return true;
 	}
 
-	//User werden gelesen und instanziert, dazugehörige Messages instanziert und zugewiesen.
+	//User werden gelesen und instanziert, dazugehoerige Messages instanziert und zugewiesen.
 	public boolean read() {
 		reviveAllUsers();
 		

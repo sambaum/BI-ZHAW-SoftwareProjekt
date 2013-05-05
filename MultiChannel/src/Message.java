@@ -2,7 +2,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Hier kommt unsere Doku und Beschreibung für diese Klasse hin.
+ * Hier kommt unsere Doku und Beschreibung fuer diese Klasse hin.
  * 
  * @author Samuel
  * 
