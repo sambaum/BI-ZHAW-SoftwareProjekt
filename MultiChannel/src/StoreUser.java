@@ -27,10 +27,12 @@ import java.util.HashMap;
 public class StoreUser {
 
 	//Variable welche nach dem Einlesen eine Liste von allen eingelesenen Usern enthält. Zu erkennen mit dem userNamen
-	private HashMap<String, User> AllUsersList; 
+	private HashMap<String, User> AllUsersListMap;
+	private ArrayList<String> AllUserNameList;
 	
 	public StoreUser() {
-		this.AllUsersList = new HashMap<String, User>();
+		this.AllUsersListMap = new HashMap<String, User>();
+		this.AllUserNameList = new ArrayList<String>();
 	}
 
 	//User wird in ein File gespeichert. Jedes Feld ist eine Zeile
@@ -83,9 +85,11 @@ public class StoreUser {
 	//User werden gelesen und instanziert, dazugehörige Messages instanziert und zugewiesen.
 	public boolean read() {
 		reviveAllUsers();
-//		for (User user: AllUsersList){
-//			reviveAllMessagesOfUser(user);
-//		}		
+		
+		for (String userName: AllUserNameList){
+			User currentUser = AllUsersListMap.get(userName);
+			reviveAllMessagesOfUser(currentUser);
+		}		
 		return true;
 	}
 
@@ -109,8 +113,8 @@ public class StoreUser {
 			singleUser = readTextFileToArray(fileName);
 			User newUser = new User(singleUser.get(0), singleUser.get(1),
 					singleUser.get(2), singleUser.get(3), singleUser.get(4));
-			System.out.println(newUser);
-			AllUsersList.put(newUser.getUserName(), newUser);
+			AllUsersListMap.put(newUser.getUserName(), newUser);
+			AllUserNameList.add(newUser.getUserName());
 		}
 	}
 
@@ -134,7 +138,7 @@ public class StoreUser {
 		return singeFileContent;
 	}
 
-	private/**ArrayList<Message>**/void reviveAllMessagesOfUser(User user) {
+	private void reviveAllMessagesOfUser(User user) {
 		File dir = new File(getDirectoryName());
 		final String filterUser = getMessagePrefix() + user.getUserName();
 		FilenameFilter filter = new FilenameFilter() {
@@ -147,7 +151,6 @@ public class StoreUser {
 			String[] dirInhalt = dir.list(filter);
 			for (int i = 0; i < dirInhalt.length; i++) {
 				allMessagesString.add(dirInhalt[i]);
-				// System.out.println(dirInhalt[i]);
 			}
 		}
 
@@ -155,22 +158,38 @@ public class StoreUser {
 			ArrayList<String> singleMessage = readTextFileToArray(fileName);
 
 			if (fileName.contains("SMS")) {
-				// SMS newSMS = new SMS(singleMessage.get(0), user,
-				// singleMessage.get(2), singleMessage.get(3));
+				SMS newSMS = new SMS(user, returnUserObjectFromUserName(singleMessage.get(1)), singleMessage.get(2), singleMessage.get(3));
+				user.addSMS(newSMS);
 			}
 			if (fileName.contains("Mail")) {
-				// System.out.println(singleMessage);
+				Mail newMail = new Mail(user, returnUserObjectFromUserName(singleMessage.get(1)), singleMessage.get(2), singleMessage.get(3));
+				user.addMail(newMail);
 			}
 			if (fileName.contains("Print")) {
-				// System.out.println(singleMessage);
+				Print newPrint = new Print(user, returnUserObjectFromUserName(singleMessage.get(1)), singleMessage.get(2), singleMessage.get(3));
+				user.addPrint(newPrint);
 			}
 		}
+	}
+	
+	User returnUserObjectFromUserName(String userName){
+		return AllUsersListMap.get(userName);
 	}
 
 	public boolean delete(User user) {
 		File f = new File(generateFileNameUser(user));
 		return f.delete();
 	}
+	
+//	public boolean cleanDirectory() {
+//		File dir = new File(getDirectoryName());
+//		if (dir.isDirectory()){
+//			return dir.delete();
+//			}
+//		else{
+//			return false;
+//		}
+//	}
 
 	private ArrayList<String> objectToStringUser(User user) {
 		ArrayList<String> list = new ArrayList<String>();

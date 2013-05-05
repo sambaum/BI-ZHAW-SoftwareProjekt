@@ -22,10 +22,10 @@ public class StoreUserTest {
 	public void setUp() throws Exception {
 		user1 = new User("baumgsam", "NoGroup", "0791234567",
 				"baumgsam@gmail.com", "samPrinter");
-		user2 = new User("fritz", "NoGroup", "07912345567",
-				"fritz@gmail.com", "samPrinter2");
-		user3 = new User("susi", "NoGroup", "07912345567",
-				"fritz@gmail.com", "samPrinter2");
+		user2 = new User("fritz", "NoGroup", "07912345567", "fritz@gmail.com",
+				"samPrinter2");
+		user3 = new User("susi", "NoGroup", "07912345567", "fritz@gmail.com",
+				"samPrinter2");
 		storeUser1 = new StoreUser();
 		sms1 = new SMS(user1, user2, "bla bla", "12.12.12");
 		sms2 = new SMS(user1, user2, "bla sdfasd fg g g gbla", "11.11.11");
@@ -41,6 +41,7 @@ public class StoreUserTest {
 
 	@After
 	public void tearDown() throws Exception {
+//		assertEquals(true,storeUser1.cleanDirectory());
 	}
 
 	@Test
@@ -51,19 +52,25 @@ public class StoreUserTest {
 
 	@Test
 	public void testRead() throws IOException {
+		// user in file schreiben
 		assertEquals(true, storeUser1.write(user1));
-		//user1 = null;
+		// username merken
+		String userName = user1.getUserName();
+		// user objekt löschen
+		user1 = null;
+		// user auf file lesen
 		assertEquals(true, storeUser1.read());
-		//check if object is alive
+		// überprüfen ob der user wieder vorhanden ist
+		user1 = storeUser1.returnUserObjectFromUserName(userName);
 		assertEquals("baumgsam", user1.getUserName());
+		// überprüfen ob User Messages hat.
+		assertNotNull(user1.getSmsBox());
 	}
-	
+
 	@Test
 	public void testDelete() throws IOException, InterruptedException {
 		assertEquals(true, storeUser1.delete(user1));
 		assertEquals(true, storeUser1.delete(user2));
 	}
-
-
 
 }
