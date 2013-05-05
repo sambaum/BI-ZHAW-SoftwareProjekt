@@ -1,22 +1,39 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Argumente (Input): Objekt des Typs Message Return-Werte (Output): boolean
  * 
- * Diese Klasse nimmt StoreMessage Objekte entgegen und speichert diese in einem
- * File ab. Diese Klasse liest verhandene Files und erstellt daraus Objekte Die
- * Files haben folgende Namens-konvention:
- * message_[Message-Typ]_user_[Sende-Datum] Beispiel für einen File-Name eines
- * SMS von einem User Frodo: message_sms_frodo_20130501_235526
+ * Diese Klasse nimmt User Objekte entgegen und speichert diese in einem File
+ * ab. Es werden die dazugehörigen Messages ebenfalls abgespeichert. Alles Files
+ * sind in einem Text-Format und können mit einem normalen Text-Editor geöffnet
+ * und selber editiert werden.
+ * 
+ * Diese Klasse liest verhandene Files und erstellt daraus Objekte. Die Files
+ * haben folgende Namens-konvention: message_[Message-Typ]_user_[Sende-Datum]
+ * Beispiel für einen File-Name eines SMS von einem User Frodo:
+ * message_sms_frodo_20130501_235526
  * 
  * @author Samuel
  * 
  */
 public class StoreUser {
 
+	//Variable welche nach dem Einlesen eine Liste von allen eingelesenen Usern enthält. Zu erkennen mit dem userNamen
+	private HashMap<String, User> AllUsersList; 
+	
+	public StoreUser() {
+		this.AllUsersList = new HashMap<String, User>();
+	}
+
+	//User wird in ein File gespeichert. Jedes Feld ist eine Zeile
 	public boolean write(User user) throws IOException {
 		FileWriter writer = null;
 		ArrayList<String> userString = objectToStringUser(user);
@@ -37,6 +54,7 @@ public class StoreUser {
 		return true;
 	}
 
+	//Message wird in ein File gespeichert. Jedes Feld ist eine Zeile
 	private boolean messageWriter(User user) throws IOException {
 		ArrayList<Message> messageList = new ArrayList<Message>();
 		messageList.addAll(user.getSmsBox());
@@ -62,9 +80,91 @@ public class StoreUser {
 		return true;
 	}
 
-	public boolean read(User user) {
-		// TODO Auto-generated method stub
-		return false;
+	//User werden gelesen und instanziert, dazugehörige Messages instanziert und zugewiesen.
+	public boolean read() {
+		reviveAllUsers();
+//		for (User user: AllUsersList){
+//			reviveAllMessagesOfUser(user);
+//		}		
+		return true;
+	}
+
+	private void reviveAllUsers() {
+		File dir = new File(getDirectoryName());
+		final String filterUser = getUserPrefix();
+		FilenameFilter filter = new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				return name.contains(filterUser);
+			}
+		};
+		ArrayList<String> listOfAllUserFiles = new ArrayList<String>();
+		if (dir.isDirectory()) {
+			String[] dirInhalt = dir.list(filter);
+			for (int i = 0; i < dirInhalt.length; i++) {
+				listOfAllUserFiles.add(dirInhalt[i]);
+			}
+		}
+		for (String fileName : listOfAllUserFiles) {
+			ArrayList<String> singleUser = new ArrayList<String>();
+			singleUser = readTextFileToArray(fileName);
+			User newUser = new User(singleUser.get(0), singleUser.get(1),
+					singleUser.get(2), singleUser.get(3), singleUser.get(4));
+			System.out.println(newUser);
+			AllUsersList.put(newUser.getUserName(), newUser);
+		}
+	}
+
+	private ArrayList<String> readTextFileToArray(String fileName) {
+		ArrayList<String> singeFileContent = new ArrayList<String>();
+		try {
+			File f = new File(getDirectoryName() + fileName);
+			FileReader fileReader = new FileReader(f);
+			BufferedReader reader = new BufferedReader(fileReader);
+			String row = null;
+
+			while ((row = reader.readLine()) != null) {
+				singeFileContent.add(row);
+			}
+			reader.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return singeFileContent;
+	}
+
+	private/**ArrayList<Message>**/void reviveAllMessagesOfUser(User user) {
+		File dir = new File(getDirectoryName());
+		final String filterUser = getMessagePrefix() + user.getUserName();
+		FilenameFilter filter = new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				return name.contains(filterUser);
+			}
+		};
+		ArrayList<String> allMessagesString = new ArrayList<String>();
+		if (dir.isDirectory()) {
+			String[] dirInhalt = dir.list(filter);
+			for (int i = 0; i < dirInhalt.length; i++) {
+				allMessagesString.add(dirInhalt[i]);
+				// System.out.println(dirInhalt[i]);
+			}
+		}
+
+		for (String fileName : allMessagesString) {
+			ArrayList<String> singleMessage = readTextFileToArray(fileName);
+
+			if (fileName.contains("SMS")) {
+				// SMS newSMS = new SMS(singleMessage.get(0), user,
+				// singleMessage.get(2), singleMessage.get(3));
+			}
+			if (fileName.contains("Mail")) {
+				// System.out.println(singleMessage);
+			}
+			if (fileName.contains("Print")) {
+				// System.out.println(singleMessage);
+			}
+		}
 	}
 
 	public boolean delete(User user) {
@@ -92,11 +192,30 @@ public class StoreUser {
 	}
 
 	private String generateFileNameUser(User user) {
-		return "user_" + user.getUserName() + ".txt";
+		return getDirectoryName() + getUserPrefix() + user.getUserName()
+				+ ".txt";
 	}
 
 	private String generateFileNameMessage(User user, Message message) {
-		return "message_" + user.getUserName() + "_" + message.getClass()
-				+ message.getDate() + ".txt";
+		return getDirectoryName() + getMessagePrefix() + user.getUserName()
+				+ "_" + message.getClass() + "_" + message.getDate() + "_"
+				+ message.getId() + ".txt";
+	}
+
+	private String getDirectoryName() {
+		String dirName = "workding_dir/";
+		File dir = new File(dirName);
+		dir.mkdir();
+		return dirName;
+	}
+
+	private String getMessagePrefix() {
+		String messagePrefix = "message_";
+		return messagePrefix;
+	}
+
+	private String getUserPrefix() {
+		String messagePrefix = "user_";
+		return messagePrefix;
 	}
 }

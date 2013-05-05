@@ -1,3 +1,6 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Hier kommt unsere Doku und Beschreibung für diese Klasse hin.
  * 
@@ -12,6 +15,7 @@ public class Message {
 	private User sender;
 	private String message;
 	private String Date;
+	private String id;
 
 	// Constructor
 	public Message(User recipient, User sender, String message, String date) {
@@ -19,9 +23,14 @@ public class Message {
 		this.sender = sender;
 		this.message = message;
 		this.Date = date;
+		this.setId(genID());
 	}
 
-	
+	private String genID(){
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date now = new Date();
+		return sdfDate.format(now);
+	}
 	
 	//getters and setters
 	public User getRecipient() {
@@ -55,7 +64,12 @@ public class Message {
 	public void setDate(String date) {
 		Date = date;
 	}
-	
-	
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 }
