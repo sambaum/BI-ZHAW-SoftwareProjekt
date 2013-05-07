@@ -59,7 +59,7 @@ public class StoreUserTest {
 		// user objekt löschen
 		user1 = null;
 		// user auf file lesen
-		assertEquals(true, storeUser1.read());
+		assertNotNull(storeUser1.read());
 		// ueberpruefen ob der user wieder vorhanden ist
 		user1 = storeUser1.returnUserObjectFromUserName(userName);
 		assertEquals("baumgsam", user1.getUserName());
