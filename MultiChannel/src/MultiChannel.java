@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Dies ist das Haupt-Programm mit der Main-Methode
@@ -28,8 +29,8 @@ public class MultiChannel {
 	}
 	
 	private void printUsers(){
-		for(String user : storeuser.getAllUserNameList()){
-			System.out.println("- " + storeuser.getAllUsersListMap().get(user).getUserName() + " (Inbox: " + calculateTotalMessageCount(storeuser.getAllUsersListMap().get(user).getUserName()) + " Messages)");
+		for (Map.Entry<String, User> entry : storeuser.getAllUsersListMap().entrySet()){
+			System.out.println("- " + entry.getValue().getUserName() + " (Inbox: " + calculateTotalMessageCount(entry.getKey()) + " Messages)");
 		}
 	}
 	

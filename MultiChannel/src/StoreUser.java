@@ -7,6 +7,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Argumente (Input): Objekt des Typs Message Return-Werte (Output): boolean
@@ -29,25 +30,17 @@ public class StoreUser {
 	// Variablen welche nach dem Einlesen eine Liste von allen eingelesenen
 	// Usern enthaelt. Zu erkennen mit dem userName.
 	private HashMap<String, User> allUsersListMap;
-	// Array List mit allen Usern. Sie hat die gleiche Reihenfolge wie
-	// allUsersListMap, ist aber Iterierbar.
-	private ArrayList<String> allUserNameList;
 
 	public StoreUser() {
 		this.allUsersListMap = new HashMap<String, User>();
-		this.allUserNameList = new ArrayList<String>();
 	}
 
 	/**
-	 * Methode: write
-	 * User wird in ein File gespeichert. Jedes Feld ist eine Zeile.
-	 * Zeile 1: username
-	 * Zeile 2: Gruppe
-	 * Zeile 3: Mobiltelefon
-	 * Zeile 4: Email
-	 * Zeile 5: Druckername
-	 * @return
-	 * Gibt bei erfolg true zurück
+	 * Methode: write User wird in ein File gespeichert. Jedes Feld ist eine
+	 * Zeile. Zeile 1: username Zeile 2: Gruppe Zeile 3: Mobiltelefon Zeile 4:
+	 * Email Zeile 5: Druckername
+	 * 
+	 * @return Gibt bei erfolg true zurück
 	 */
 	public boolean write(User user) throws IOException {
 		FileWriter writer = null;
@@ -70,14 +63,12 @@ public class StoreUser {
 	}
 
 	/**
-	 * Methode: messageWriter (wird von Methode write aufgerufen)
-	 * Nachricht wird in ein File gespeichert. Jedes Feld ist eine Zeile.
-	 * Zeile 1: sender (Absender)
-	 * Zeile 2: recepient (Empfänger)
-	 * Zeile 3: Nachricht
-	 * Zeile 4: Versands-Datum
-	 * @return
-	 * Gibt bei erfolg true zurück
+	 * Methode: messageWriter (wird von Methode write aufgerufen) Nachricht wird
+	 * in ein File gespeichert. Jedes Feld ist eine Zeile. Zeile 1: sender
+	 * (Absender) Zeile 2: recepient (Empfänger) Zeile 3: Nachricht Zeile 4:
+	 * Versands-Datum
+	 * 
+	 * @return Gibt bei erfolg true zurück
 	 */
 	private boolean messageWriter(User user) throws IOException {
 		ArrayList<Message> messageList = new ArrayList<Message>();
@@ -104,27 +95,30 @@ public class StoreUser {
 		return true;
 	}
 
-	/** 
+	/**
 	 * Methode: read
-	 * User werden aus den Files gelesen und instanziert. Dazugehoerige Messages instanziert und zugewiesen.
-	 * Die einzelnen Aktionen sind in den Methoden reviveAllUsers und reviveAllMessagesOfUser implementiert.
-	 * @return
-	 * Gibt alle User in Form eine Hashmap zurück. Das Schlüsselwort um einen User in der Hashmap zu finden ist der username
+	 * User werden aus den Files gelesen und instanziert.
+	 * Dazugehoerige Messages instanziert und zugewiesen. Die einzelnen Aktionen
+	 * sind in den Methoden reviveAllUsers und reviveAllMessagesOfUser
+	 * implementiert.
+	 * 
+	 * @return Gibt alle User in Form eine Hashmap zurück. Das Schlüsselwort um
+	 *         einen User in der Hashmap zu finden ist der username
 	 */
 	public HashMap<String, User> read() {
 		reviveAllUsers();
-		for (String userName : allUserNameList) {
-			User currentUser = allUsersListMap.get(userName);
-			reviveAllMessagesOfUser(currentUser);
+		for (Map.Entry<String, User> entry : allUsersListMap.entrySet()) {
+			reviveAllMessagesOfUser(entry.getValue());
 		}
 		return allUsersListMap;
 	}
 
 	/**
-	 * Methode: reviveAllUsers
-	 * Alle User die in einem File gespeichert sind, werden instanziert
-	 * @return
-	 * Gibt alle User in Form eine Hashmap zurück. Das Schlüsselwort um einen User in der Hashmap zu finden ist der username
+	 * Methode: reviveAllUsers Alle User die in einem File gespeichert sind,
+	 * werden instanziert
+	 * 
+	 * @return Gibt alle User in Form eine Hashmap zurück. Das Schlüsselwort um
+	 *         einen User in der Hashmap zu finden ist der username
 	 */
 	private HashMap<String, User> reviveAllUsers() {
 		File dir = new File(getDirectoryName());
@@ -147,16 +141,16 @@ public class StoreUser {
 			User newUser = new User(singleUser.get(0), singleUser.get(1),
 					singleUser.get(2), singleUser.get(3), singleUser.get(4));
 			allUsersListMap.put(newUser.getUserName(), newUser);
-			allUserNameList.add(newUser.getUserName());
 		}
 		return allUsersListMap;
 	}
 
 	/**
-	 * List ein einzelnes File und füllt ein Array ab. Jede Zeile ist ein Eintrag im Array
+	 * List ein einzelnes File und füllt ein Array ab. Jede Zeile ist ein
+	 * Eintrag im Array
+	 * 
 	 * @param fileName
-	 * @return
-	 * Array mit allen Zeile des Files
+	 * @return Array mit allen Zeile des Files
 	 */
 	private ArrayList<String> readTextFileToArray(String fileName) {
 		ArrayList<String> singeFileContent = new ArrayList<String>();
@@ -179,7 +173,9 @@ public class StoreUser {
 	}
 
 	/**
-	 * Instanziert alle Message Objecte eines users und fuegt diese der Inbox hinzu.
+	 * Instanziert alle Message Objecte eines users und fuegt diese der Inbox
+	 * hinzu.
+	 * 
 	 * @param user
 	 */
 	private void reviveAllMessagesOfUser(User user) {
@@ -203,19 +199,19 @@ public class StoreUser {
 
 			if (fileName.contains("SMS")) {
 				SMS newSMS = new SMS(user,
-						returnUserObjectFromUserName(singleMessage.get(1)),
+						allUsersListMap.get(singleMessage.get(1)),
 						singleMessage.get(2), singleMessage.get(3));
 				user.addSMS(newSMS);
 			}
 			if (fileName.contains("Mail")) {
 				Mail newMail = new Mail(user,
-						returnUserObjectFromUserName(singleMessage.get(1)),
+						allUsersListMap.get(singleMessage.get(1)),
 						singleMessage.get(2), singleMessage.get(3));
 				user.addMail(newMail);
 			}
 			if (fileName.contains("Print")) {
 				Print newPrint = new Print(user,
-						returnUserObjectFromUserName(singleMessage.get(1)),
+						allUsersListMap.get(singleMessage.get(1)),
 						singleMessage.get(2), singleMessage.get(3));
 				user.addPrint(newPrint);
 			}
@@ -223,24 +219,20 @@ public class StoreUser {
 	}
 
 	/**
-	 * Diese Methode stellen den Link zwichen Map und Array dar. Da eine Map nicht Iterierbar ist, ist dies notwendig
-	 * @param userName
-	 * @return
-	 */
-	User returnUserObjectFromUserName(String userName) {
-		return allUsersListMap.get(userName);
-	}
-
-	/**
 	 * Löscht einen User
+	 * 
 	 * @param user
 	 * @return
 	 */
 	public boolean delete(User user) {
 		File f = new File(generateFileNameUser(user));
-		return f.delete();
-		//TODO: Muss noch aus dem Array/Map entfernt werden
-		
+		boolean success = f.delete();
+		if (success = true) {
+			allUsersListMap.remove(user);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private ArrayList<String> objectToStringUser(User user) {
@@ -293,9 +285,5 @@ public class StoreUser {
 	// getter und setters
 	public HashMap<String, User> getAllUsersListMap() {
 		return allUsersListMap;
-	}
-
-	public ArrayList<String> getAllUserNameList() {
-		return allUserNameList;
 	}
 }

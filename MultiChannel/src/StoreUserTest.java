@@ -61,7 +61,7 @@ public class StoreUserTest {
 		// user auf file lesen
 		assertNotNull(storeUser1.read());
 		// ueberpruefen ob der user wieder vorhanden ist
-		user1 = storeUser1.returnUserObjectFromUserName(userName);
+		user1 = storeUser1.getAllUsersListMap().get(userName);
 		assertEquals("baumgsam", user1.getUserName());
 		// ueberpruefen ob User Messages hat.
 		assertNotNull(user1.getSmsBox());
@@ -71,6 +71,9 @@ public class StoreUserTest {
 	public void testDelete() throws IOException, InterruptedException {
 		assertEquals(true, storeUser1.delete(user1));
 		assertEquals(true, storeUser1.delete(user2));
+		assertEquals(true, storeUser1.write(user1));
+		assertEquals(true, storeUser1.write(user2));
+
 	}
 
 }
