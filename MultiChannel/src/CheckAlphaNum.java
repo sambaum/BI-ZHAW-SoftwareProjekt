@@ -9,7 +9,7 @@ public class CheckAlphaNum implements Check{
 	@Override
 	public boolean check(String stringToCheck) {
 		// TODO Auto-generated method stub
-		return false;
+		return stringToCheck.matches("\\b[a-zdjA-Z0-9]*\\b");
 	}
 
 }
