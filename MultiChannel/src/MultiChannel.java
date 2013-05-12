@@ -25,16 +25,16 @@ public class MultiChannel {
 		storeuser = new StoreUser();
 		storeuser.read();
 		printUsers();
-		System.out.println("Anzahl geladener User: " + storeuser.getAllUsersListMap().size());
+		System.out.println("Anzahl geladener User: " + storeuser.getUserMap().size());
 	}
 	
 	private void printUsers(){
-		for (Map.Entry<String, User> entry : storeuser.getAllUsersListMap().entrySet()){
+		for (Map.Entry<String, User> entry : storeuser.getUserMap().entrySet()){
 			System.out.println("- " + entry.getValue().getUserName() + " (Inbox: " + calculateTotalMessageCount(entry.getKey()) + " Messages)");
 		}
 	}
 	
 	private int calculateTotalMessageCount(String user){
-		return storeuser.getAllUsersListMap().get(user).getSmsBox().size() + storeuser.getAllUsersListMap().get(user).getMailBox().size() + storeuser.getAllUsersListMap().get(user).getPrintBox().size();
+		return storeuser.getUserMap().get(user).getSmsBox().size() + storeuser.getUserMap().get(user).getMailBox().size() + storeuser.getUserMap().get(user).getPrintBox().size();
 	}
 }

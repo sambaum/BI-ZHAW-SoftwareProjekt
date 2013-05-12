@@ -33,6 +33,27 @@ public class User {
 		this.printBox = new ArrayList<Print>();
 	}
 
+	public ArrayList<String> getFullInbox() {
+		ArrayList<String> fullInbox = new ArrayList<String>();
+		ArrayList<Message> allMsg = new ArrayList<Message>();
+		allMsg.addAll(smsBox);
+		allMsg.addAll(mailBox);
+		allMsg.addAll(printBox);
+
+		fullInbox.add("Sie haben " + allMsg.size() + " neue Nachrichten:");
+		fullInbox.add("------------------------------");
+		for (Message message : allMsg) {
+			fullInbox.add("[" + message.getClass().getName()
+					+ "-Nachricht von " + message.getSender().getUserName()
+					+ ":]");
+			fullInbox.add(message.getMessage());
+			fullInbox.add("");
+		}
+		// System.out.println(allMsg.size());
+		return fullInbox;
+	}
+
+	// getter und setter
 	public void addSMS(SMS sms) {
 		smsBox.add(sms);
 	}

@@ -29,10 +29,10 @@ public class StoreUser {
 
 	// Variablen welche nach dem Einlesen eine Liste von allen eingelesenen
 	// Usern enthaelt. Zu erkennen mit dem userName.
-	private HashMap<String, User> allUsersListMap;
+	private HashMap<String, User> userMap;
 
 	public StoreUser() {
-		this.allUsersListMap = new HashMap<String, User>();
+		this.userMap = new HashMap<String, User>();
 	}
 
 	/**
@@ -107,10 +107,10 @@ public class StoreUser {
 	 */
 	public HashMap<String, User> read() {
 		reviveAllUsers();
-		for (Map.Entry<String, User> entry : allUsersListMap.entrySet()) {
+		for (Map.Entry<String, User> entry : userMap.entrySet()) {
 			reviveAllMessagesOfUser(entry.getValue());
 		}
-		return allUsersListMap;
+		return userMap;
 	}
 
 	/**
@@ -140,9 +140,9 @@ public class StoreUser {
 			singleUser = readTextFileToArray(fileName);
 			User newUser = new User(singleUser.get(0), singleUser.get(1),
 					singleUser.get(2), singleUser.get(3), singleUser.get(4));
-			allUsersListMap.put(newUser.getUserName(), newUser);
+			userMap.put(newUser.getUserName(), newUser);
 		}
-		return allUsersListMap;
+		return userMap;
 	}
 
 	/**
@@ -199,19 +199,19 @@ public class StoreUser {
 
 			if (fileName.contains("SMS")) {
 				SMS newSMS = new SMS(user,
-						allUsersListMap.get(singleMessage.get(1)),
+						userMap.get(singleMessage.get(1)),
 						singleMessage.get(2), singleMessage.get(3));
 				user.addSMS(newSMS);
 			}
 			if (fileName.contains("Mail")) {
 				Mail newMail = new Mail(user,
-						allUsersListMap.get(singleMessage.get(1)),
+						userMap.get(singleMessage.get(1)),
 						singleMessage.get(2), singleMessage.get(3));
 				user.addMail(newMail);
 			}
 			if (fileName.contains("Print")) {
 				Print newPrint = new Print(user,
-						allUsersListMap.get(singleMessage.get(1)),
+						userMap.get(singleMessage.get(1)),
 						singleMessage.get(2), singleMessage.get(3));
 				user.addPrint(newPrint);
 			}
@@ -228,7 +228,7 @@ public class StoreUser {
 		File f = new File(generateFileNameUser(user));
 		boolean success = f.delete();
 		if (success = true) {
-			allUsersListMap.remove(user);
+			userMap.remove(user);
 			return true;
 		} else {
 			return false;
@@ -261,7 +261,7 @@ public class StoreUser {
 
 	private String generateFileNameMessage(User user, Message message) {
 		return getDirectoryName() + getMessagePrefix() + user.getUserName()
-				+ "_" + message.getClass() + "_" + message.getDate() + "_"
+				+ "_" + message.getClass().getName() + "_" + message.getDate() + "_"
 				+ message.getId() + ".txt";
 	}
 
@@ -283,7 +283,7 @@ public class StoreUser {
 	}
 
 	// getter und setters
-	public HashMap<String, User> getAllUsersListMap() {
-		return allUsersListMap;
+	public HashMap<String, User> getUserMap() {
+		return userMap;
 	}
 }

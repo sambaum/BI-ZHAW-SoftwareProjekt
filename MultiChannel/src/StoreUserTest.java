@@ -27,11 +27,18 @@ public class StoreUserTest {
 		user3 = new User("susi", "NoGroup", "07912345567", "fritz@gmail.com",
 				"samPrinter2");
 		storeUser1 = new StoreUser();
-		sms1 = new SMS(user1, user2, "bla bla", "12.12.12");
-		sms2 = new SMS(user1, user2, "bla sdfasd fg g g gbla", "11.11.11");
-		sms3 = new SMS(user2, user1, "bla sdsfffffd fg g g gbla", "11.14.11");
-		mail1 = new Mail(user1, user2, "bla sdfasd fg g g gbla", "11.11.11");
-		print1 = new Print(user1, user2, "bla sdfasd fg g g gbla", "11.11.11");
+
+		sms1 = new SMS(user1, user2, "Hallo du, hier eine tolle SMS von mir",
+				"12.12.12");
+		sms2 = new SMS(user1, user2,
+				"Hallo du, hier eine noch tollere SMS von mir", "11.11.11");
+		sms3 = new SMS(user2, user1, "Hall? Warum antwortest du nicht?",
+				"11.14.11");
+		mail1 = new Mail(user1, user2, "Ein super Email von mir", "11.11.11");
+		print1 = new Print(user1, user2,
+				"Sehr geehrter Herr Bla bla\n Bitte Zahlen Sie Ihre Rechnung",
+				"11.11.11");
+
 		user1.addSMS(sms1);
 		user1.addSMS(sms2);
 		user1.addMail(mail1);
@@ -41,7 +48,7 @@ public class StoreUserTest {
 
 	@After
 	public void tearDown() throws Exception {
-//		assertEquals(true,storeUser1.cleanDirectory());
+		// assertEquals(true,storeUser1.cleanDirectory());
 	}
 
 	@Test
@@ -61,7 +68,7 @@ public class StoreUserTest {
 		// user auf file lesen
 		assertNotNull(storeUser1.read());
 		// ueberpruefen ob der user wieder vorhanden ist
-		user1 = storeUser1.getAllUsersListMap().get(userName);
+		user1 = storeUser1.getUserMap().get(userName);
 		assertEquals("baumgsam", user1.getUserName());
 		// ueberpruefen ob User Messages hat.
 		assertNotNull(user1.getSmsBox());
