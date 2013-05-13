@@ -9,7 +9,7 @@ public class CheckTel implements Check{
 	@Override
 	public boolean check(String stringToCheck) {
 		// TODO Auto-generated method stub
-		return false;
+		return stringToCheck.matches("\\b[0-9]*\\b");
 	}
 
 }

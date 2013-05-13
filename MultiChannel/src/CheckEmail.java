@@ -9,7 +9,7 @@ public class CheckEmail implements Check{
 	@Override
 	public boolean check(String stringToCheck) {
 		// TODO Auto-generated method stub
-		return false;
+		return stringToCheck.matches("\\b[a-zdjA-Z0-9._%+-]*@[a-zA-Z0-9.-]*\\.[a-zA-Z]{2,4}\\b");
 	}
 
 }
