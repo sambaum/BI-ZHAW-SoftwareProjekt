@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Abgabetermin:  Mi-12.06.2013
  * Dies ist das Haupt-Programm mit der Main-Methode
  * 
  * @author Samuel
