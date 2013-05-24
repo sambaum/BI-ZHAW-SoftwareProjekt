@@ -14,15 +14,15 @@ public class Message {
 	private User recipient;
 	private User sender;
 	private String message;
-	private String Date;
+	private Date date;
 	private String id;
 
 	// Constructor
-	public Message(User recipient, User sender, String message, String date) {
+	public Message(User recipient, User sender, String message, Date date) {
 		this.recipient = recipient;
 		this.sender = sender;
 		this.message = message;
-		this.Date = date;
+		this.date = date;
 		this.setId(genID());
 	}
 
@@ -57,12 +57,12 @@ public class Message {
 		this.message = message;
 	}
 
-	public String getDate() {
-		return Date;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setDate(String date) {
-		Date = date;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public String getId() {

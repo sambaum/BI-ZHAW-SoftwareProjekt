@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,9 +32,11 @@ public class StoreUser {
 	// Variablen welche nach dem Einlesen eine Liste von allen eingelesenen
 	// Usern enthaelt. Zu erkennen mit dem userName.
 	private HashMap<String, User> userMap;
+	private SimpleDateFormat sdf;
 
 	public StoreUser() {
 		this.userMap = new HashMap<String, User>();
+		this.sdf = new SimpleDateFormat("dd.MM.yyyy");
 	}
 
 	/**
@@ -96,8 +100,7 @@ public class StoreUser {
 	}
 
 	/**
-	 * Methode: read
-	 * User werden aus den Files gelesen und instanziert.
+	 * Methode: read User werden aus den Files gelesen und instanziert.
 	 * Dazugehoerige Messages instanziert und zugewiesen. Die einzelnen Aktionen
 	 * sind in den Methoden reviveAllUsers und reviveAllMessagesOfUser
 	 * implementiert.
@@ -198,22 +201,41 @@ public class StoreUser {
 			ArrayList<String> singleMessage = readTextFileToArray(fileName);
 
 			if (fileName.contains("SMS")) {
-				SMS newSMS = new SMS(user,
-						userMap.get(singleMessage.get(1)),
-						singleMessage.get(2), singleMessage.get(3));
-				user.addSMS(newSMS);
+				SMS newSMS;
+				try {
+					newSMS = new SMS(user, userMap.get(singleMessage.get(1)),
+							singleMessage.get(2), new SimpleDateFormat(
+									"dd.MM.yyyy").parse(singleMessage.get(3)));
+					user.addSMS(newSMS);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+
 			}
 			if (fileName.contains("Mail")) {
-				Mail newMail = new Mail(user,
-						userMap.get(singleMessage.get(1)),
-						singleMessage.get(2), singleMessage.get(3));
-				user.addMail(newMail);
+				Mail newMail;
+				try {
+					newMail = new Mail(user, userMap.get(singleMessage.get(1)),
+							singleMessage.get(2), new SimpleDateFormat(
+									"dd.MM.yyyy").parse(singleMessage.get(3)));
+					user.addMail(newMail);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+
 			}
 			if (fileName.contains("Print")) {
-				Print newPrint = new Print(user,
-						userMap.get(singleMessage.get(1)),
-						singleMessage.get(2), singleMessage.get(3));
-				user.addPrint(newPrint);
+				Print newPrint;
+				try {
+					newPrint = new Print(user,
+							userMap.get(singleMessage.get(1)),
+							singleMessage.get(2), new SimpleDateFormat(
+									"dd.MM.yyyy").parse(singleMessage.get(3)));
+					user.addPrint(newPrint);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+
 			}
 		}
 	}
@@ -250,7 +272,7 @@ public class StoreUser {
 		list.add((message.getRecipient()).getUserName());
 		list.add((message.getSender()).getUserName());
 		list.add(message.getMessage());
-		list.add(message.getDate());
+		list.add(sdf.format(message.getDate()));
 		return list;
 	}
 
@@ -261,8 +283,8 @@ public class StoreUser {
 
 	private String generateFileNameMessage(User user, Message message) {
 		return getDirectoryName() + getMessagePrefix() + user.getUserName()
-				+ "_" + message.getClass().getName() + "_" + message.getDate() + "_"
-				+ message.getId() + ".txt";
+				+ "_" + message.getClass().getName() + "_" + sdf.format(message.getDate())
+				+ "_" + message.getId() + ".txt";
 	}
 
 	private String getDirectoryName() {

@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import org.junit.After;
 import org.junit.Before;
@@ -29,15 +30,15 @@ public class StoreUserTest {
 		storeUser1 = new StoreUser();
 
 		sms1 = new SMS(user1, user2, "Hallo du, hier eine tolle SMS von mir",
-				"12.12.12");
+				new SimpleDateFormat("dd.MM.yyyy").parse("05.06.2013"));
 		sms2 = new SMS(user1, user2,
-				"Hallo du, hier eine noch tollere SMS von mir", "11.11.11");
+				"Hallo du, hier eine noch tollere SMS von mir", new SimpleDateFormat("dd.MM.yyyy").parse("02.01.2013"));
 		sms3 = new SMS(user2, user1, "Hall? Warum antwortest du nicht?",
-				"11.14.11");
-		mail1 = new Mail(user1, user2, "Ein super Email von mir", "11.11.11");
+				new SimpleDateFormat("dd.MM.yyyy").parse("05.03.2013"));
+		mail1 = new Mail(user1, user2, "Ein super Email von mir", new SimpleDateFormat("dd.MM.yyyy").parse("03.06.2014"));
 		print1 = new Print(user1, user2,
-				"Sehr geehrter Herr Bla bla\n Bitte Zahlen Sie Ihre Rechnung",
-				"11.11.11");
+				"Sehr geehrter Herr Bla bla. Bitte Zahlen Sie Ihre Rechnung",
+				new SimpleDateFormat("dd.MM.yyyy").parse("05.06.2013"));
 
 		user1.addSMS(sms1);
 		user1.addSMS(sms2);
