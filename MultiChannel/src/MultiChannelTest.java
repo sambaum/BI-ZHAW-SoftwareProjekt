@@ -1,5 +1,3 @@
-import static org.junit.Assert.*;
-
 import java.text.SimpleDateFormat;
 
 import org.junit.After;
@@ -33,6 +31,7 @@ public class MultiChannelTest {
 				new SimpleDateFormat("dd.MM.yyyy").parse("05.06.2013"));
 		user1.addSMS(sms1);
 		user1.addSMS(sms2);
+		user1.addSMS(sms3);
 		user1.addMail(mail1);
 		user1.addPrint(print1);
 	}

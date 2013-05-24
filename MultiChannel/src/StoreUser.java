@@ -248,6 +248,7 @@ public class StoreUser {
 	 */
 	public boolean delete(User user) {
 		File f = new File(generateFileNameUser(user));
+		@SuppressWarnings("unused")
 		boolean success = f.delete();
 		if (success = true) {
 			userMap.remove(user);
