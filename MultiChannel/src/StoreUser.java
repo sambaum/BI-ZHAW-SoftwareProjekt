@@ -141,8 +141,8 @@ public class StoreUser {
 		for (String fileName : listOfAllUserFiles) {
 			ArrayList<String> singleUser = new ArrayList<String>();
 			singleUser = readTextFileToArray(fileName);
-			User newUser = new User(singleUser.get(0), singleUser.get(1),
-					singleUser.get(2), singleUser.get(3), singleUser.get(4));
+			User newUser = new User(singleUser.get(0), singleUser.get(1), singleUser.get(2), singleUser.get(3),
+					singleUser.get(4));
 			userMap.put(newUser.getUserName(), newUser);
 		}
 		return userMap;
@@ -203,9 +203,8 @@ public class StoreUser {
 			if (fileName.contains("SMS")) {
 				SMS newSMS;
 				try {
-					newSMS = new SMS(user, userMap.get(singleMessage.get(1)),
-							singleMessage.get(2), new SimpleDateFormat(
-									"dd.MM.yyyy").parse(singleMessage.get(3)));
+					newSMS = new SMS(user, userMap.get(singleMessage.get(1)), singleMessage.get(2),
+							new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)));
 					user.addSMS(newSMS);
 				} catch (ParseException e) {
 					e.printStackTrace();
@@ -215,9 +214,8 @@ public class StoreUser {
 			if (fileName.contains("Mail")) {
 				Mail newMail;
 				try {
-					newMail = new Mail(user, userMap.get(singleMessage.get(1)),
-							singleMessage.get(2), new SimpleDateFormat(
-									"dd.MM.yyyy").parse(singleMessage.get(3)));
+					newMail = new Mail(user, userMap.get(singleMessage.get(1)), singleMessage.get(2),
+							new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)));
 					user.addMail(newMail);
 				} catch (ParseException e) {
 					e.printStackTrace();
@@ -227,10 +225,8 @@ public class StoreUser {
 			if (fileName.contains("Print")) {
 				Print newPrint;
 				try {
-					newPrint = new Print(user,
-							userMap.get(singleMessage.get(1)),
-							singleMessage.get(2), new SimpleDateFormat(
-									"dd.MM.yyyy").parse(singleMessage.get(3)));
+					newPrint = new Print(user, userMap.get(singleMessage.get(1)), singleMessage.get(2),
+							new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)));
 					user.addPrint(newPrint);
 				} catch (ParseException e) {
 					e.printStackTrace();
@@ -278,14 +274,12 @@ public class StoreUser {
 	}
 
 	private String generateFileNameUser(User user) {
-		return getDirectoryName() + getUserPrefix() + user.getUserName()
-				+ ".txt";
+		return getDirectoryName() + getUserPrefix() + user.getUserName() + ".txt";
 	}
 
 	private String generateFileNameMessage(User user, Message message) {
-		return getDirectoryName() + getMessagePrefix() + user.getUserName()
-				+ "_" + message.getClass().getName() + "_" + sdf.format(message.getDate())
-				+ "_" + message.getId() + ".txt";
+		return getDirectoryName() + getMessagePrefix() + user.getUserName() + "_" + message.getClass().getName() + "_"
+				+ sdf.format(message.getDate()) + "_" + message.getId() + ".txt";
 	}
 
 	private String getDirectoryName() {

@@ -28,8 +28,7 @@ public class MultiChannel {
 	}
 
 	private void startMenu() {
-		System.out
-				.println("Wählen Sie Ihre Oberfläche: \n [1] User-Administration \n [2] Mail-Programm");
+		System.out.println("Wählen Sie Ihre Oberfläche: \n [1] User-Administration \n [2] Mail-Programm");
 		System.out.print("> "); // Eingabeaufforderung
 		String eingabezeile = leser.nextLine();
 		if (eingabezeile.equals("1")) {
@@ -37,38 +36,41 @@ public class MultiChannel {
 		} else if (eingabezeile.equals("2")) {
 			System.out.println("Mail-Programm wird gestartet...");
 			User sessionUser = userAuswahl();
-			System.out.println("Sie sind angemeldet als User: "
-					+ sessionUser.getUserName());
+			System.out.println("Sie sind angemeldet als User: " + sessionUser.getUserName());
 		} else {
-			System.out
-					.println("Ihre Eingabe ist falsch, geben Sie entweder 1 oder 2 ein");
+			System.out.println("Ihre Eingabe ist falsch, geben Sie entweder 1 oder 2 ein");
 			startMenu();
 		}
 	}
 
 	private User userAuswahl() {
-		System.out.print("Folgende User sind vorhanden: ");
-		for (Map.Entry<String, User> entry : storeuser.getUserMap().entrySet()) {
-			System.out.print(entry.getValue().getUserName() + ", ");
+		if (storeuser.getUserMap().size() > 0) {
+			System.out.print("Folgende User sind vorhanden: ");
+			for (Map.Entry<String, User> entry : storeuser.getUserMap().entrySet()) {
+				System.out.print(entry.getValue().getUserName() + ", ");
+			}
+			System.out.println("\n> "); // Eingabeaufforderung2
+			String eingabezeile = leser.nextLine();
+			return storeuser.getUserMap().get(eingabezeile);
+		} else {
+			System.out
+					.println("Es sind keine user vorhanden, erfassen Sie zuerst mindestens einen user. Zurück zum Hauptmenu...");
+			startMenu();
+			return null;
 		}
-		System.out.println("\n> "); // Eingabeaufforderung2
-		String eingabezeile = leser.nextLine();
-		return storeuser.getUserMap().get(eingabezeile);
 	}
 
 	private void loadStoredUsers() {
 		System.out.println("Gespeicherte User werden geladen...");
 		storeuser.read();
 		printUsers();
-		System.out.println("Anzahl geladener User: "
-				+ storeuser.getUserMap().size());
+		System.out.println("Anzahl geladener User: " + storeuser.getUserMap().size());
 	}
 
 	private void printUsers() {
 		for (Map.Entry<String, User> entry : storeuser.getUserMap().entrySet()) {
-			System.out.println("- " + entry.getValue().getUserName()
-					+ " (Inbox: " + calculateTotalMessageCount(entry.getKey())
-					+ " Messages)");
+			System.out.println("- " + entry.getValue().getUserName() + " (Inbox: "
+					+ calculateTotalMessageCount(entry.getKey()) + " Messages)");
 		}
 	}
 
