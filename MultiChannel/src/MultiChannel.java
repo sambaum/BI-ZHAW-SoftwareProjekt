@@ -33,10 +33,13 @@ public class MultiChannel {
 		String eingabezeile = leser.nextLine();
 		if (eingabezeile.equals("1")) {
 			System.out.println("User-Administration wird gestartet...");
+			AdminSession adminSession = new AdminSession();
+			adminSession.startSession();
 		} else if (eingabezeile.equals("2")) {
 			System.out.println("Mail-Programm wird gestartet...");
 			User sessionUser = userAuswahl();
-			System.out.println("Sie sind angemeldet als User: " + sessionUser.getUserName());
+			MailSession mailSession = new MailSession(sessionUser);
+			mailSession.startSession();
 		} else {
 			System.out.println("Ihre Eingabe ist falsch, geben Sie entweder 1 oder 2 ein");
 			startMenu();
@@ -45,13 +48,13 @@ public class MultiChannel {
 
 	private User userAuswahl() {
 		if (storeuser.getUserMap().size() > 0) {
-			System.out.print("Folgende User sind vorhanden: ");
-			for (Map.Entry<String, User> entry : storeuser.getUserMap().entrySet()) {
-				System.out.print(entry.getValue().getUserName() + ", ");
+			System.out.println("Bitten geben Sie Ihren Usernamen an. Folgende User stehen zu Wahl: ");
+			for (Map.Entry<String, String> entry : storeuser.getUserNumberedList().entrySet()) {
+				System.out.println("[" + entry.getKey() + "] " + entry.getValue());
 			}
 			System.out.println("\n> "); // Eingabeaufforderung2
 			String eingabezeile = leser.nextLine();
-			return storeuser.getUserMap().get(eingabezeile);
+			return storeuser.getUserMap().get(storeuser.getUserNumberedList().get(eingabezeile));
 		} else {
 			System.out
 					.println("Es sind keine user vorhanden, erfassen Sie zuerst mindestens einen user. Zurück zum Hauptmenu...");

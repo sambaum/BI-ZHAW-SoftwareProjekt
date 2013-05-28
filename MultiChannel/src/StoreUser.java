@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -287,6 +288,17 @@ public class StoreUser {
 		File dir = new File(dirName);
 		dir.mkdir();
 		return dirName;
+	}
+
+	// Test
+	public HashMap<String, String> getUserNumberedList() {
+		HashMap<String, String> numberedList = new HashMap<String, String>();
+		Integer number = 1;
+		for (Map.Entry<String, User> entry : userMap.entrySet()) {
+			numberedList.put(number.toString(),entry.getKey());
+			number++;
+		}
+		return numberedList;
 	}
 
 	private String getMessagePrefix() {
