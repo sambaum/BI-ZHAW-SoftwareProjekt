@@ -4,7 +4,7 @@
  */
 import java.util.HashMap;
 
-public class MailSession {
+public class MailSession extends MenuBasedClasses{
 
 	private User user;
 	private HashMap<Integer, String> actionList;
@@ -15,6 +15,7 @@ public class MailSession {
 	 * @param user
 	 */
 	public MailSession(User user) {
+		super();
 		this.user = user;
 	}
 

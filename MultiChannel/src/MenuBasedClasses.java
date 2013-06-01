@@ -1,12 +1,18 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class MenuBasedClasses {
 
-	private StoreUser storeuser; //Variable für das Iteragieren mit Usern
+	// Variable für das interagieren mit Usern. Diese ist static damit alle
+	// Objekt auf den gleichen user-Store zugreiffen. Mehrfaches instanzieren
+	// eines user-Stores würde vermutlich zu ungewollten effektven führen.
+	private static StoreUser storeuser;
+	private Scanner leser; //Um die Eingabe des Users zu verarbeiten
 
 	public MenuBasedClasses() {
 		storeuser = new StoreUser();
+		leser = new Scanner(System.in);
 	}
 
 	public void menuPrinter(HashMap<String, String> menuToPrint) {
@@ -19,4 +25,7 @@ public class MenuBasedClasses {
 		return storeuser;
 	}
 
+	public Scanner getLeser() {
+		return leser;
+	}
 }

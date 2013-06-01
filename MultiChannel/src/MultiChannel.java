@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class MultiChannel extends MenuBasedClasses{
 
 	private static MultiChannel multiChannel;
-	private Scanner leser; //Um die Eingabe des Users zu verarbeiten
+	//private Scanner leser; //Um die Eingabe des Users zu verarbeiten
 
 	/**
 	 * Konstruktor.
@@ -21,7 +21,7 @@ public class MultiChannel extends MenuBasedClasses{
 	 */
 	public MultiChannel() {
 		super();
-		leser = new Scanner(System.in);
+		//leser = new Scanner(System.in);
 	}
 
 	public static void main(String[] args) {
@@ -39,7 +39,7 @@ public class MultiChannel extends MenuBasedClasses{
 	private void startMenu() {
 		System.out.println("Wählen Sie Ihre Oberfläche: \n [1] User-Administration \n [2] Mail-Programm");
 		System.out.print("> "); // Eingabeaufforderung
-		String eingabezeile = leser.nextLine(); //Eingabe lesen
+		String eingabezeile = getLeser().nextLine(); //Eingabe lesen
 		//Eingabe auswerten
 		if (eingabezeile.equals("1")) {
 			System.out.println("User-Administration wird gestartet...");
@@ -68,7 +68,7 @@ public class MultiChannel extends MenuBasedClasses{
 			System.out.println("Bitten geben Sie Ihren Usernamen an. Folgende User stehen zu Wahl: ");
 			menuPrinter(getStoreuser().getUserNumberedList()); // Ein  Liste mit vorhanden User wird dargestellt
 			System.out.println("\n> "); // Eingabeaufforderung
-			String eingabezeile = leser.nextLine(); //Eingabe lesen
+			String eingabezeile = getLeser().nextLine(); //Eingabe lesen
 			return getStoreuser().getUserMap().get(getStoreuser().getUserNumberedList().get(eingabezeile)); //Ausgewähltes User-Objekt zurückgeben
 		} else {
 			System.out
