@@ -25,6 +25,15 @@ public class Message {
 		this.date = date;
 		this.setId(genID());
 	}
+	
+	// Constructor mit ID
+	public Message(User recipient, User sender, String message, Date date, String id) {
+		this.recipient = recipient;
+		this.sender = sender;
+		this.message = message;
+		this.date = date;
+		this.id = id;
+	}
 
 	private String genID(){
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMddHHmmss");

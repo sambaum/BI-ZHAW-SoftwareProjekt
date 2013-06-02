@@ -9,7 +9,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -200,39 +199,35 @@ public class StoreUser {
 
 		for (String fileName : allMessagesString) {
 			ArrayList<String> singleMessage = readTextFileToArray(fileName);
-
 			if (fileName.contains("SMS")) {
 				SMS newSMS;
 				try {
 					newSMS = new SMS(user, userMap.get(singleMessage.get(1)), singleMessage.get(2),
-							new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)));
+							new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)), singleMessage.get(4));
 					user.addSMS(newSMS);
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-
 			}
 			if (fileName.contains("Mail")) {
 				Mail newMail;
 				try {
 					newMail = new Mail(user, userMap.get(singleMessage.get(1)), singleMessage.get(2),
-							new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)));
+							new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)), singleMessage.get(4));
 					user.addMail(newMail);
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-
 			}
 			if (fileName.contains("Print")) {
 				Print newPrint;
 				try {
 					newPrint = new Print(user, userMap.get(singleMessage.get(1)), singleMessage.get(2),
-							new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)));
+							new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)), singleMessage.get(4));
 					user.addPrint(newPrint);
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-
 			}
 		}
 	}
@@ -271,6 +266,7 @@ public class StoreUser {
 		list.add((message.getSender()).getUserName());
 		list.add(message.getMessage());
 		list.add(sdf.format(message.getDate()));
+		list.add(message.getId());
 		return list;
 	}
 
@@ -290,7 +286,6 @@ public class StoreUser {
 		return dirName;
 	}
 
-	// Test
 	public HashMap<String, String> getUserNumberedList() {
 		HashMap<String, String> numberedList = new HashMap<String, String>();
 		Integer number = 1;

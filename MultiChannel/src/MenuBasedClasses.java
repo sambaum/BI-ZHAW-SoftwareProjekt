@@ -16,9 +16,22 @@ public class MenuBasedClasses {
 	}
 
 	public void menuPrinter(HashMap<String, String> menuToPrint) {
-		for (Map.Entry<String, String> entry : storeuser.getUserNumberedList().entrySet()) {
+		for (Map.Entry<String, String> entry : menuToPrint.entrySet()) {
 			System.out.println("[" + entry.getKey() + "] " + entry.getValue());
 		}
+	}
+	
+	public String askAndGetAnswer(String frage){
+		System.out.println(frage);
+		System.out.print("> "); // Eingabeaufforderung
+		return getLeser().nextLine(); //Eingabe lesen
+	}
+	
+	public String askAndGetAnswerWithList(HashMap<String, String> list, String frage){
+		System.out.println(frage);
+		menuPrinter(list);
+		System.out.print("> "); // Eingabeaufforderung
+		return getLeser().nextLine(); //Eingabe lesen
 	}
 
 	public StoreUser getStoreuser() {

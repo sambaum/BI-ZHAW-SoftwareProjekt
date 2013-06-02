@@ -13,5 +13,11 @@ public class SMS extends Message{
 		super(recipient, sender, message, date);
 		// TODO Auto-generated constructor stub
 	}
+	
+	//Constructor mit id
+	public SMS(User recipient, User sender, String message, Date date, String id) {
+		super(recipient, sender, message, date, id);
+		// TODO Auto-generated constructor stub
+	}
 
 }
