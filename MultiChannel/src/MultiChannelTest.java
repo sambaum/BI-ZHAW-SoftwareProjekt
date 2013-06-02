@@ -45,5 +45,9 @@ public class MultiChannelTest {
 			// System.out.println(user1.getFullInbox().size());
 			System.out.println(line);
 		}
+		
+		System.out.println(user1.getMailBox().size());
+		user1.clearAllMessages();
+		System.out.println(user1.getMailBox().size());
 	}
 }

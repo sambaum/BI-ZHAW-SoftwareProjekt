@@ -14,12 +14,14 @@ public class MailSession extends MenuBasedClasses {
 
 	/**
 	 * Konstruktor
+	 * 
 	 * @param user
 	 */
 	public MailSession(User user) {
 		super();
 		this.user = user;
 		//System.out.println(getStoreuser().getUserNumberedList());
+		getStoreuser().read();
 	}
 
 	/**
@@ -29,8 +31,8 @@ public class MailSession extends MenuBasedClasses {
 		System.out.println("Sie sind angemeldet als User: " + user.getUserName());
 		chooseWhatToDo();
 	}
-	
-	public void chooseWhatToDo(){
+
+	public void chooseWhatToDo() {
 		HashMap<String, String> initMenu = new HashMap<String, String>();
 		initMenu.put("1", "Nachrichten abrufen");
 		initMenu.put("2", "Nachricht verschicken");
@@ -39,10 +41,7 @@ public class MailSession extends MenuBasedClasses {
 		// System.out.println(initMenu);
 		String antwort = askAndGetAnswerWithList(initMenu, "Was möchten Sie tun?:");
 		if (antwort.equals("1")) {
-			for (String zeile : user.getFullInbox()) {
-				System.out.println(zeile);
-				// TODO gelesene Nachrichten müssen gelöscht werden
-			}
+			readMessages();
 		} else if (antwort.equals("2")) {
 			sendNewMessage();
 		} else if (antwort.equals("3")) {
@@ -52,14 +51,38 @@ public class MailSession extends MenuBasedClasses {
 		}
 	}
 
+	public void readMessages() {
+		for (String zeile : user.getFullInbox()) {
+			System.out.println(zeile);
+		}
+		HashMap<String, String> auswahl = new HashMap<String, String>();
+		auswahl.put("1", "Ja");
+		auswahl.put("2", "Nein");
+		if (user.getFullInbox().size() > 2) {
+			String antwort = askAndGetAnswerWithList(auswahl, "Möchten Sie gelesene Nachrichen löschen?");
+			if (antwort.equals("1")) {
+				//Nachrichen werden gelöscht
+				user.clearAllMessages();
+				getStoreuser().removeAllMessagesOfUser(user);
+			} else if (antwort.equals("2")) {
+				//Nachrichten werden NICHT gelöscht
+			} else {
+				//Nachrichten werden NICHT gelöscht
+				System.out.println("Ihre Antwort war ungültig, Nachrichten werden nicht gelöscht");
+			}
+		}
+		chooseWhatToDo();
+	}
+
 	public void sendNewMessage() {
-		getStoreuser().read(); //TODO, nur workaround, müsste eigentlich auch ohne funktionieren
+		//getStoreuser().read(); //TODO, nur workaround, müsste eigentlich auch ohne funktionieren
 		String antwort = askAndGetAnswerWithList(getStoreuser().getUserNumberedList(), "Wählen Sie den Empfänger");
 		User recipient = getStoreuser().getUserMap().get(getStoreuser().getUserNumberedList().get(antwort));
 		String message = askAndGetAnswer("Geben Sie ihre Nachricht ein");
 		antwort = askAndGetAnswer("Geben Sie das Versandsdatum an (Format: dd.MM.yyyy)");
 		Date date = new Date();
 		if (new CheckDate().check(antwort) == true) {
+			System.out.println(antwort); //Debug
 			try {
 				date = new SimpleDateFormat("dd.MM.yyyy").parse(antwort);
 			} catch (ParseException e) {

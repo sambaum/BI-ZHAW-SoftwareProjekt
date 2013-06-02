@@ -175,6 +175,28 @@ public class StoreUser {
 		return singeFileContent;
 	}
 
+	public void removeAllMessagesOfUser(User user){
+		File dir = new File(getDirectoryName());
+		final String filterUser = getMessagePrefix() + user.getUserName();
+		FilenameFilter filter = new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				return name.contains(filterUser);
+			}
+		};
+		//ArrayList<String> allMessagesString = new ArrayList<String>();
+		if (dir.isDirectory()) {
+			String[] dirInhalt = dir.list(filter);
+			for (int i = 0; i < dirInhalt.length; i++) {
+				File f = new File(getDirectoryName()+dirInhalt[i]);
+				if (f.delete()==false){
+					System.out.println("Die Nachrichten konnten nicht gelöscht werden");
+				} else {
+					System.out.println("Nachrichten gelöscht!");
+				}
+			}
+		}	
+	}
+	
 	/**
 	 * Instanziert alle Message Objecte eines users und fuegt diese der Inbox
 	 * hinzu.

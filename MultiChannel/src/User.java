@@ -1,4 +1,6 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Die Klasse hat praktisch nur Datenfelder. Zusätzlich noch ein paar einfache
@@ -36,10 +38,21 @@ public class User {
 	public ArrayList<String> getFullInbox() {
 		ArrayList<String> fullInbox = new ArrayList<String>();
 		ArrayList<Message> allMsg = new ArrayList<Message>();
-		allMsg.addAll(smsBox);
-		allMsg.addAll(mailBox);
-		allMsg.addAll(printBox);
-
+		for(Message sms: smsBox){
+			if(ifMessageDateIsInPast(sms)){
+				allMsg.add(sms);
+			}
+		}
+		for(Message mail: mailBox){
+			if(ifMessageDateIsInPast(mail)){
+				allMsg.add(mail);
+			}
+		}
+		for(Message print: printBox){
+			if(ifMessageDateIsInPast(print)){
+				allMsg.add(print);
+			}
+		}
 		fullInbox.add("Sie haben " + allMsg.size() + " neue Nachrichten:");
 		fullInbox.add("------------------------------");
 		for (Message message : allMsg) {
@@ -49,10 +62,23 @@ public class User {
 			fullInbox.add(message.getMessage());
 			fullInbox.add("");
 		}
-		// System.out.println(allMsg.size());
 		return fullInbox;
 	}
+	
+	private boolean ifMessageDateIsInPast(Message message){
+		if( message.getDate().compareTo(new Date())<0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
+	public void clearAllMessages(){
+		setPrintBox(new ArrayList<Print>());
+		setSmsBox(new ArrayList<SMS>());
+		setMailBox(new ArrayList<Mail>());
+	}
+	
 	// getter und setter
 	public void addSMS(SMS sms) {
 		smsBox.add(sms);
