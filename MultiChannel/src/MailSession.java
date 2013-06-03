@@ -36,15 +36,18 @@ public class MailSession extends MenuBasedClasses {
 		HashMap<String, String> initMenu = new HashMap<String, String>();
 		initMenu.put("1", "Nachrichten abrufen");
 		initMenu.put("2", "Nachricht verschicken");
-		initMenu.put("3", "Zurück zu Hauptmenu");
+		initMenu.put("3", "Nachricht an Gruppe verschicken");
+		initMenu.put("4", "Zurück zu Hauptmenu");
 		// menuPrinter(initMenu);
 		// System.out.println(initMenu);
 		String antwort = askAndGetAnswerWithList(initMenu, "Was möchten Sie tun?:");
 		if (antwort.equals("1")) {
 			readMessages();
 		} else if (antwort.equals("2")) {
-			sendNewMessage();
+			sendNewMessageToSingelUser();
 		} else if (antwort.equals("3")) {
+			sendNewMessageToGroup();
+		} else if (antwort.equals("4")) {
 			return;
 		} else {
 			System.out.println("Ihre Antwort war ungültig");
@@ -73,42 +76,54 @@ public class MailSession extends MenuBasedClasses {
 		}
 		chooseWhatToDo();
 	}
-
-	public void sendNewMessage() {
-		//getStoreuser().read(); //TODO, nur workaround, müsste eigentlich auch ohne funktionieren
-		String antwort = askAndGetAnswerWithList(getStoreuser().getUserNumberedList(), "Wählen Sie den Empfänger");
-		User recipient = getStoreuser().getUserMap().get(getStoreuser().getUserNumberedList().get(antwort));
-		String message = askAndGetAnswer("Geben Sie ihre Nachricht ein");
-		antwort = askAndGetAnswer("Geben Sie das Versandsdatum an (Format: dd.MM.yyyy)");
+	
+	private Date getDateForNewMessage(){
+		String antwortTemp = askAndGetAnswer("Geben Sie das Versandsdatum an (Format: dd.MM.yyyy)");
 		Date date = new Date();
-		if (new CheckDate().check(antwort) == true) {
-			System.out.println(antwort); //Debug
+		if (new CheckDate().check(antwortTemp) == true) {
 			try {
-				date = new SimpleDateFormat("dd.MM.yyyy").parse(antwort);
+				return new SimpleDateFormat("dd.MM.yyyy").parse(antwortTemp);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 		} else {
 			System.out.println("Sie haben kein gültiges Versandsdatum angegeben. Die Nachricht wird sofort versendet");
 			try {
-				date = new SimpleDateFormat("dd.MM.yyyy").parse("01.01.2000");
+				return new SimpleDateFormat("dd.MM.yyyy").parse("01.01.2000");
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 		}
+		return date;
+	}
+	
+	private String getMessageTypeForNewMessage(){
 		HashMap<String, String> messageTypes = new HashMap<String, String>();
 		messageTypes.put("1", "SMS");
 		messageTypes.put("2", "Mail");
 		messageTypes.put("3", "Print");
 		menuPrinter(messageTypes);
-		antwort = askAndGetAnswer("Wählen Sie ihr Übertragungsmedium");
-		if (antwort.equals("1")) {
+		return askAndGetAnswer("Wählen Sie ihr Übertragungsmedium");
+	}
+
+	public void sendNewMessageToSingelUser() {
+		String antwortTemp = askAndGetAnswerWithList(getStoreuser().getUserNumberedList(), "Wählen Sie den Empfänger");
+		User recipient = getStoreuser().getUserMap().get(getStoreuser().getUserNumberedList().get(antwortTemp));
+		String message = askAndGetAnswer("Geben Sie ihre Nachricht ein");
+		Date date = getDateForNewMessage();
+		String messageType = getMessageTypeForNewMessage();
+		sendMessage(recipient, user, message, date, messageType);
+		chooseWhatToDo();
+	}
+	
+	private void sendMessage(User recipient, User user, String message, Date date, String messageType){
+		if (messageType.equals("1")) {
 			user.addSMS(new SMS(recipient, user, message, date));
 		}
-		if (antwort.equals("2")) {
+		if (messageType.equals("2")) {
 			user.addMail(new Mail(recipient, user, message, date));
 		}
-		if (antwort.equals("3")) {
+		if (messageType.equals("3")) {
 			user.addPrint(new Print(recipient, user, message, date));
 		}
 		try {
@@ -118,6 +133,15 @@ public class MailSession extends MenuBasedClasses {
 			System.out.println("Ihre Nachricht konnte nicht verschickt werden");
 			//e.printStackTrace();
 		}
+	}
+	
+	private void sendNewMessageToGroup() {
+		String antwortTemp = askAndGetAnswerWithList(getStoreuser().getUserNumberedList(), "Wählen Sie den Empfänger"); //TODO muss gruppe sein
+		User recipient = getStoreuser().getUserMap().get(getStoreuser().getUserNumberedList().get(antwortTemp));
+		String message = askAndGetAnswer("Geben Sie ihre Nachricht ein");
+		Date date = getDateForNewMessage();
+		String messageType = getMessageTypeForNewMessage();
+		sendMessage(recipient, user, message, date, messageType);
 		chooseWhatToDo();
 	}
 }

@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -316,6 +317,15 @@ public class StoreUser {
 			number++;
 		}
 		return numberedList;
+	}
+	
+	//TODO not tested!!
+	public HashSet<String> getAllExistingGroups(){
+		HashSet<String> listOfGroups = new HashSet<String>();
+		for (Map.Entry<String, User> entry : userMap.entrySet()) {
+			listOfGroups.add(entry.getValue().getGroup());
+		}
+		return listOfGroups;
 	}
 
 	private String getMessagePrefix() {
