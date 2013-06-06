@@ -1,4 +1,3 @@
-
 /**
  * Diese Klasse beschäftig sich mit der Mail Session. Die Mail-Session ist Benutzer-Spezifisch. Von hier aus kann man seine Nachrichten lesen oder eine Nachricht schicken.
  */
@@ -8,14 +7,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 public class MailSession extends MenuBasedClasses {
 
 	private User user;
 
 	/**
-	 * Konstruktor
-	 * Gespeicherte Daten werden ausgelesen
+	 * Konstruktor Gespeicherte Daten werden ausgelesen
 	 * 
 	 * @param user
 	 */
@@ -26,12 +25,13 @@ public class MailSession extends MenuBasedClasses {
 	}
 
 	/**
-	 * Die Mail-Session wird gestartet und der User wird mit seinem Namen begrüsst.
-	 * Die Dinge die er hier tun kann, werden Ihm angezeigt.
-	 * Session zu starten
+	 * Die Mail-Session wird gestartet und der User wird mit seinem Namen
+	 * begrüsst. Die Dinge die er hier tun kann, werden Ihm angezeigt. Session
+	 * zu starten
 	 */
 	public void startSession() {
-		System.out.println("Sie sind angemeldet als User: " + user.getUserName());
+		System.out.println("Sie sind angemeldet als User: "
+				+ user.getUserName());
 		chooseWhatToDo();
 	}
 
@@ -46,7 +46,8 @@ public class MailSession extends MenuBasedClasses {
 		initMenu.put("4", "Zurück zu Hauptmenu");
 		// menuPrinter(initMenu);
 		// System.out.println(initMenu);
-		String antwort = askAndGetAnswerWithList(initMenu, "Was möchten Sie tun?:");
+		String antwort = askAndGetAnswerWithList(initMenu,
+				"Was möchten Sie tun?:");
 		if (antwort.equals("1")) {
 			readMessages();
 		} else if (antwort.equals("2")) {
@@ -73,7 +74,8 @@ public class MailSession extends MenuBasedClasses {
 		auswahl.put("1", "Ja");
 		auswahl.put("2", "Nein");
 		if (user.getFullInbox().size() > 2) {
-			String antwort = askAndGetAnswerWithList(auswahl, "Möchten Sie gelesene Nachrichen löschen?");
+			String antwort = askAndGetAnswerWithList(auswahl,
+					"Möchten Sie gelesene Nachrichen löschen?");
 			if (antwort.equals("1")) {
 				// Nachrichen werden gelöscht
 				user.clearAllMessages();
@@ -82,7 +84,8 @@ public class MailSession extends MenuBasedClasses {
 				// Nachrichten werden NICHT gelöscht
 			} else {
 				// Nachrichten werden NICHT gelöscht
-				System.out.println("Ihre Antwort war ungültig, Nachrichten werden nicht gelöscht");
+				System.out
+						.println("Ihre Antwort war ungültig, Nachrichten werden nicht gelöscht");
 			}
 		}
 		chooseWhatToDo();
@@ -98,7 +101,8 @@ public class MailSession extends MenuBasedClasses {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("Sie haben kein gültiges Versandsdatum angegeben. Die Nachricht wird sofort versendet");
+			System.out
+					.println("Sie haben kein gültiges Versandsdatum angegeben. Die Nachricht wird sofort versendet");
 			try {
 				return new SimpleDateFormat("dd.MM.yyyy").parse("01.01.2000");
 			} catch (ParseException e) {
@@ -118,8 +122,10 @@ public class MailSession extends MenuBasedClasses {
 	}
 
 	public void sendNewMessageToSingelUser() {
-		String antwortTemp = askAndGetAnswerWithList(getStoreuser().getUserNumberedList(), "Wählen Sie den Empfänger");
-		User recipient = getStoreuser().getUserMap().get(getStoreuser().getUserNumberedList().get(antwortTemp));
+		String antwortTemp = askAndGetAnswerWithList(getStoreuser()
+				.getUserNumberedList(), "Wählen Sie den Empfänger");
+		User recipient = getStoreuser().getUserMap().get(
+				getStoreuser().getUserNumberedList().get(antwortTemp));
 		String message = askAndGetAnswer("Geben Sie ihre Nachricht ein");
 		Date date = getDateForNewMessage();
 		String messageType = getMessageTypeForNewMessage();
@@ -127,7 +133,8 @@ public class MailSession extends MenuBasedClasses {
 		chooseWhatToDo();
 	}
 
-	private void sendMessage(User recipient, User user, String message, Date date, String messageType) {
+	private void sendMessage(User recipient, User user, String message,
+			Date date, String messageType) {
 		if (messageType.equals("1")) {
 			user.addSMS(new SMS(recipient, user, message, date));
 		}
@@ -139,20 +146,36 @@ public class MailSession extends MenuBasedClasses {
 		}
 		try {
 			getStoreuser().write(user);
-			System.out.println("Ihre Nachricht wurde erfolgreich verschickt");
+			System.out.println("Ihre Nachricht an " + user
+					+ " wurde erfolgreich verschickt");
 		} catch (IOException e) {
-			System.out.println("Ihre Nachricht konnte nicht verschickt werden");
+			System.out.println("Ihre Nachricht an " + user
+					+ " konnte nicht verschickt werden");
 			// e.printStackTrace();
 		}
 	}
 
 	private void sendNewMessageToGroup() {
-		String antwortTemp = askAndGetAnswerWithList(getStoreuser().getUserNumberedList(), "Wählen Sie den Empfänger"); // TODO muss gruppe sein
-		User recipient = getStoreuser().getUserMap().get(getStoreuser().getUserNumberedList().get(antwortTemp));
+
+		String GruppenString = "(";
+		for (String gruppe : getStoreuser().getAllExistingGroups()) {
+			GruppenString = GruppenString + ", " + gruppe;
+		}
+		GruppenString = GruppenString + ")";
+
+		String recipient_group = askAndGetAnswer("Wählen Sie aus folgenden Gruppen und geben die die gewünschte Gruppe ein: "
+				+ GruppenString); // TODO muss gruppe sein
+		// User recipient =
+		// getStoreuser().getUserMap().get(getStoreuser().getUserNumberedList().get(antwortTemp));
 		String message = askAndGetAnswer("Geben Sie ihre Nachricht ein");
 		Date date = getDateForNewMessage();
 		String messageType = getMessageTypeForNewMessage();
-		sendMessage(recipient, user, message, date, messageType);
+		for (Map.Entry<String, User> entry : getStoreuser().getUserMap()
+				.entrySet()) {
+			if (entry.getValue().getGroup().equals(recipient_group)) {
+				sendMessage(entry.getValue(), user, message, date, messageType);
+			}
+		}
 		chooseWhatToDo();
 	}
 }

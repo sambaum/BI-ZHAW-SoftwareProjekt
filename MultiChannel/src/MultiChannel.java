@@ -43,7 +43,10 @@ public class MultiChannel extends MenuBasedClasses {
 			MailSession mailSession = new MailSession(sessionUser);
 			mailSession.startSession();
 			startMenu();
-		} else {
+//		} else if { /TODO: Demo
+//			
+		}
+		else {
 			System.out.println("Ihre Eingabe ist falsch, geben Sie entweder 1 oder 2 ein");
 			startMenu();
 		}
