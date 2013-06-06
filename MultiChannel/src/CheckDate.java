@@ -9,14 +9,18 @@ import java.text.SimpleDateFormat;
 
 public class CheckDate implements Check{
 
+	/**
+	 * TODO: Dokumentation!
+	 */
 	@Override
 	public boolean check(String stringToCheck) {
-		// TODO Auto-generated method stub
 		return isDate(stringToCheck);
 	}
 
+	/**
+	 * TODO: Dokumentation!
+	 */
 	private boolean isDate(String stringToCheck) {
-		// TODO Auto-generated method stub
 		try {
 		      //Check date validation
 		      SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");

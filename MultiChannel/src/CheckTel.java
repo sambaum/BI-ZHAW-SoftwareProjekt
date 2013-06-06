@@ -6,9 +6,11 @@
 
 public class CheckTel implements Check{
 
+	/**
+	 * TODO: Dokumentation!
+	 */
 	@Override
 	public boolean check(String stringToCheck) {
-		// TODO Auto-generated method stub
 		return stringToCheck.matches("\\b[0-9]*\\b");
 	}
 

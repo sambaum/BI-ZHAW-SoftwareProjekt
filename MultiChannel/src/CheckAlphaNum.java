@@ -6,6 +6,9 @@
 
 public class CheckAlphaNum implements Check{
 
+	/**
+	 * Die Methode überprüft ob ein Sting nur Alphanumerische Zeichen enthält.
+	 */
 	@Override
 	public boolean check(String stringToCheck) {
 		// TODO Auto-generated method stub

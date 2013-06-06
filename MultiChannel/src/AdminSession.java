@@ -1,3 +1,7 @@
+/**
+ * Die Klasse kümmert sich um die User-Verwaltung. Es können User erasst un gelöscht werden.
+ * Der User wird mit einem Menu durch die Aktivitäten geführt.
+ */
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -10,6 +14,9 @@ public class AdminSession extends MenuBasedClasses{
 		chooseWhatToDo();
 	}
 	
+	/**
+	 * Start-Menu mit Auswahl
+	 */
 	public void chooseWhatToDo(){
 		HashMap<String, String> initMenu = new HashMap<String, String>();
 		initMenu.put("1", "User erfassen");
@@ -26,6 +33,10 @@ public class AdminSession extends MenuBasedClasses{
 		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * Hier kann ein neue User erstellt werden.
+	 * Infos werden druch den User eingegeben und anschliessend wird ein neues User-Objekt mit den gelieferten Angaben erstellt
+	 */
 	private void createUser() {
 		System.out.println("Ein neuer User wird erfasst...");
 		String username = askAndGetAnswer("Usernamen:");

@@ -1,23 +1,39 @@
 import java.util.Date;
 
 /**
- * Hier kommt unsere Doku und Beschreibung fï¿½r diese Klasse hin.
- * @author Samuel
- * ...
+ * Die Klasse repräsentiert eine E-Mail
+ * 
+ * @author Samuel ...
  */
 
-public class Mail extends Message{
+public class Mail extends Message {
 
-	//constructor
+	/**
+	 * Standard-Konstruktor
+	 * 
+	 * @param recipient
+	 * @param sender
+	 * @param message
+	 * @param date
+	 */
 	public Mail(User recipient, User sender, String message, Date date) {
 		super(recipient, sender, message, date);
-		// TODO Auto-generated constructor stub
 	}
-	
-	//constructor mit id
+
+	/**
+	 * Kontruktor mit einem Zusätzlichen Feld ID. Dieser Konstruktor wird
+	 * benötigt um vorhanden User ein gespeicherten Files zu laden.
+	 * Normalerweise wird die ID beim instanzieren generiert. Wird aber ein
+	 * vorhandener User geladen, soll die vorhanden ID verwendet werden.
+	 * 
+	 * @param recipient
+	 * @param sender
+	 * @param message
+	 * @param date
+	 * @param id
+	 */
 	public Mail(User recipient, User sender, String message, Date date, String id) {
 		super(recipient, sender, message, date, id);
-		// TODO Auto-generated constructor stub
 	}
 
 }

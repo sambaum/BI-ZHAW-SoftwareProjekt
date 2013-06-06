@@ -1,7 +1,8 @@
+
 /**
  * Diese Klasse beschäftig sich mit der Mail Session. Die Mail-Session ist Benutzer-Spezifisch. Von hier aus kann man seine Nachrichten lesen oder eine Nachricht schicken.
- * 
  */
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,24 +15,29 @@ public class MailSession extends MenuBasedClasses {
 
 	/**
 	 * Konstruktor
+	 * Gespeicherte Daten werden ausgelesen
 	 * 
 	 * @param user
 	 */
 	public MailSession(User user) {
 		super();
 		this.user = user;
-		//System.out.println(getStoreuser().getUserNumberedList());
 		getStoreuser().read();
 	}
 
 	/**
-	 * Starten der Session. Wird aus der Klasse MultiChannel aufgerufen um die Session zu starten
+	 * Die Mail-Session wird gestartet und der User wird mit seinem Namen begrüsst.
+	 * Die Dinge die er hier tun kann, werden Ihm angezeigt.
+	 * Session zu starten
 	 */
 	public void startSession() {
 		System.out.println("Sie sind angemeldet als User: " + user.getUserName());
 		chooseWhatToDo();
 	}
 
+	/**
+	 * Menu und Entscheidung was man Tun will.
+	 */
 	public void chooseWhatToDo() {
 		HashMap<String, String> initMenu = new HashMap<String, String>();
 		initMenu.put("1", "Nachrichten abrufen");
@@ -54,6 +60,11 @@ public class MailSession extends MenuBasedClasses {
 		}
 	}
 
+	/**
+	 * Alle Nachrichten eines User werden hier ausgegeben. Dem User wird die
+	 * Wahl gestellt ob er seine gelesenen Nachrichten löschen möchte.
+	 * Anschliessend geht es zurück zum Hauptmenu
+	 */
 	public void readMessages() {
 		for (String zeile : user.getFullInbox()) {
 			System.out.println(zeile);
@@ -64,20 +75,20 @@ public class MailSession extends MenuBasedClasses {
 		if (user.getFullInbox().size() > 2) {
 			String antwort = askAndGetAnswerWithList(auswahl, "Möchten Sie gelesene Nachrichen löschen?");
 			if (antwort.equals("1")) {
-				//Nachrichen werden gelöscht
+				// Nachrichen werden gelöscht
 				user.clearAllMessages();
 				getStoreuser().removeAllMessagesOfUser(user);
 			} else if (antwort.equals("2")) {
-				//Nachrichten werden NICHT gelöscht
+				// Nachrichten werden NICHT gelöscht
 			} else {
-				//Nachrichten werden NICHT gelöscht
+				// Nachrichten werden NICHT gelöscht
 				System.out.println("Ihre Antwort war ungültig, Nachrichten werden nicht gelöscht");
 			}
 		}
 		chooseWhatToDo();
 	}
-	
-	private Date getDateForNewMessage(){
+
+	private Date getDateForNewMessage() {
 		String antwortTemp = askAndGetAnswer("Geben Sie das Versandsdatum an (Format: dd.MM.yyyy)");
 		Date date = new Date();
 		if (new CheckDate().check(antwortTemp) == true) {
@@ -96,8 +107,8 @@ public class MailSession extends MenuBasedClasses {
 		}
 		return date;
 	}
-	
-	private String getMessageTypeForNewMessage(){
+
+	private String getMessageTypeForNewMessage() {
 		HashMap<String, String> messageTypes = new HashMap<String, String>();
 		messageTypes.put("1", "SMS");
 		messageTypes.put("2", "Mail");
@@ -115,8 +126,8 @@ public class MailSession extends MenuBasedClasses {
 		sendMessage(recipient, user, message, date, messageType);
 		chooseWhatToDo();
 	}
-	
-	private void sendMessage(User recipient, User user, String message, Date date, String messageType){
+
+	private void sendMessage(User recipient, User user, String message, Date date, String messageType) {
 		if (messageType.equals("1")) {
 			user.addSMS(new SMS(recipient, user, message, date));
 		}
@@ -131,12 +142,12 @@ public class MailSession extends MenuBasedClasses {
 			System.out.println("Ihre Nachricht wurde erfolgreich verschickt");
 		} catch (IOException e) {
 			System.out.println("Ihre Nachricht konnte nicht verschickt werden");
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
-	
+
 	private void sendNewMessageToGroup() {
-		String antwortTemp = askAndGetAnswerWithList(getStoreuser().getUserNumberedList(), "Wählen Sie den Empfänger"); //TODO muss gruppe sein
+		String antwortTemp = askAndGetAnswerWithList(getStoreuser().getUserNumberedList(), "Wählen Sie den Empfänger"); // TODO muss gruppe sein
 		User recipient = getStoreuser().getUserMap().get(getStoreuser().getUserNumberedList().get(antwortTemp));
 		String message = askAndGetAnswer("Geben Sie ihre Nachricht ein");
 		Date date = getDateForNewMessage();

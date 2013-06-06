@@ -6,6 +6,9 @@
 
 public class CheckEmail implements Check{
 
+	/**
+	 * TODO: Dokumentation!
+	 */
 	@Override
 	public boolean check(String stringToCheck) {
 		// TODO Auto-generated method stub

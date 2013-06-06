@@ -1,7 +1,7 @@
 import java.util.Date;
 
 /**
- * Hier kommt unsere Doku und Beschreibung für diese Klasse hin.
+ * Die Klasse repräsentiert eine Druck-Nachricht.
  * 
  * @author Samuel
  * 
@@ -9,16 +9,32 @@ import java.util.Date;
 
 public class Print extends Message {
 
-	// Construktor
+	/**
+	 * Standard-Konstruktor
+	 * 
+	 * @param recipient
+	 * @param sender
+	 * @param message
+	 * @param date
+	 */
 	public Print(User recipient, User sender, String message, Date date) {
 		super(recipient, sender, message, date);
-		// TODO Auto-generated constructor stub
 	}
-	
-	// Construktor with id
+
+	/**
+	 * Kontruktor mit einem Zusätzlichen Feld ID. Dieser Konstruktor wird
+	 * benötigt um vorhanden User ein gespeicherten Files zu laden.
+	 * Normalerweise wird die ID beim instanzieren generiert. Wird aber ein
+	 * vorhandener User geladen, soll die vorhanden ID verwendet werden.
+	 * 
+	 * @param recipient
+	 * @param sender
+	 * @param message
+	 * @param date
+	 * @param id
+	 */
 	public Print(User recipient, User sender, String message, Date date, String id) {
 		super(recipient, sender, message, date, id);
-		// TODO Auto-generated constructor stub
 	}
 
 }
