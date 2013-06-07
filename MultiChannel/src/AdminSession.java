@@ -10,7 +10,7 @@ public class AdminSession extends MenuBasedClasses{
 	
 	public void startSession(){
 		getStoreuser().read();
-		System.out.println("Willkommen im Admin-Tool. Was möchten Sie tun?");
+		System.out.println("\nWillkommen im Admin-Tool. Was möchten Sie tun?");
 		chooseWhatToDo();
 	}
 	
@@ -21,11 +21,16 @@ public class AdminSession extends MenuBasedClasses{
 		HashMap<String, String> initMenu = new HashMap<String, String>();
 		initMenu.put("1", "User erfassen");
 		initMenu.put("2", "User löschen");
-		String antwort = askAndGetAnswerWithList(initMenu, "Was möchten Sie tun?:");
-		if (antwort.equals("1")){
-			createUser();
-		} else if(antwort.equals("2")){
-			deleteuser();
+		String antwort = "";
+		while (initMenu.containsKey(antwort)==false){
+			antwort = askAndGetAnswerWithList(initMenu, "\nWas möchten Sie tun?:");
+			if (antwort.equals("1")){
+				createUser();
+			} else if(antwort.equals("2")){
+				deleteuser();
+			} else {
+				System.out.println("Diese Auswahl gibt es nicht");
+			}
 		}
 	}
 
@@ -38,7 +43,7 @@ public class AdminSession extends MenuBasedClasses{
 	 * Infos werden druch den User eingegeben und anschliessend wird ein neues User-Objekt mit den gelieferten Angaben erstellt
 	 */
 	private void createUser() {
-		System.out.println("Ein neuer User wird erfasst...");
+		System.out.println("\nEin neuer User wird erfasst...");
 		String username = askAndGetAnswer("Usernamen:");
 		String group = askAndGetAnswer("Gruppe:");
 		String tel = askAndGetAnswer("Telefon-Nummer:");
@@ -50,5 +55,6 @@ public class AdminSession extends MenuBasedClasses{
 			System.out.println("Bei speichern des Users ist ein Fehler aufgetreten");
 			e.printStackTrace();
 		}
+		chooseWhatToDo();
 	}
 }

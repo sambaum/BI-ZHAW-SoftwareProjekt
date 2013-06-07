@@ -52,7 +52,7 @@ public class User {
 				allMsg.add(print);
 			}
 		}
-		fullInbox.add("Sie haben " + allMsg.size() + " neue Nachrichten:");
+		fullInbox.add("\nSie haben " + allMsg.size() + " neue Nachrichten:");
 		fullInbox.add("------------------------------");
 		for (Message message : allMsg) {
 			fullInbox.add("[" + message.getClass().getName()
@@ -90,6 +90,11 @@ public class User {
 	public void addMail(Mail mail) {
 		mailBox.add(mail);
 	}
+	
+//	@Override
+//	public String toString(){
+//		return userName;
+//	}
 
 	// getter & setter section
 	public String getUserName() {

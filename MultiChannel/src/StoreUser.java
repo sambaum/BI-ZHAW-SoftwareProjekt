@@ -15,14 +15,12 @@ import java.util.Map;
 /**
  * Argumente (Input): Objekt des Typs Message Return-Werte (Output): boolean
  * 
- * Diese Klasse nimmt User Objekte entgegen und speichert diese in einem File
- * ab. Es werden die dazugehoerigen Messages ebenfalls abgespeichert. Alles
- * Files sind in einem Text-Format und koennen mit einem normalen Text-Editor
- * geoeffnet und selber editiert werden.
+ * Diese Klasse nimmt User Objekte entgegen und speichert diese in einem File ab. Es werden die dazugehoerigen Messages
+ * ebenfalls abgespeichert. Alles Files sind in einem Text-Format und koennen mit einem normalen Text-Editor geoeffnet
+ * und selber editiert werden.
  * 
- * Diese Klasse liest verhandene Files und erstellt daraus Objekte. Die Files
- * haben folgende Namens-konvention: message_[Message-Typ]_user_[Sende-Datum]
- * Beispiel fuer einen File-Name eines SMS von einem User Frodo:
+ * Diese Klasse liest verhandene Files und erstellt daraus Objekte. Die Files haben folgende Namens-konvention:
+ * message_[Message-Typ]_user_[Sende-Datum] Beispiel fuer einen File-Name eines SMS von einem User Frodo:
  * message_sms_frodo_20130501_235526
  * 
  * @author Samuel
@@ -41,9 +39,8 @@ public class StoreUser {
 	}
 
 	/**
-	 * Methode: write User wird in ein File gespeichert. Jedes Feld ist eine
-	 * Zeile. Zeile 1: username Zeile 2: Gruppe Zeile 3: Mobiltelefon Zeile 4:
-	 * Email Zeile 5: Druckername
+	 * Methode: write User wird in ein File gespeichert. Jedes Feld ist eine Zeile. Zeile 1: username Zeile 2: Gruppe
+	 * Zeile 3: Mobiltelefon Zeile 4: Email Zeile 5: Druckername
 	 * 
 	 * @return Gibt bei erfolg true zurück
 	 */
@@ -68,10 +65,8 @@ public class StoreUser {
 	}
 
 	/**
-	 * Methode: messageWriter (wird von Methode write aufgerufen) Nachricht wird
-	 * in ein File gespeichert. Jedes Feld ist eine Zeile. Zeile 1: sender
-	 * (Absender) Zeile 2: recepient (Empfänger) Zeile 3: Nachricht Zeile 4:
-	 * Versands-Datum
+	 * Methode: messageWriter (wird von Methode write aufgerufen) Nachricht wird in ein File gespeichert. Jedes Feld ist
+	 * eine Zeile. Zeile 1: sender (Absender) Zeile 2: recepient (Empfänger) Zeile 3: Nachricht Zeile 4: Versands-Datum
 	 * 
 	 * @return Gibt bei erfolg true zurück
 	 */
@@ -101,13 +96,11 @@ public class StoreUser {
 	}
 
 	/**
-	 * Methode: read User werden aus den Files gelesen und instanziert.
-	 * Dazugehoerige Messages instanziert und zugewiesen. Die einzelnen Aktionen
-	 * sind in den Methoden reviveAllUsers und reviveAllMessagesOfUser
-	 * implementiert.
+	 * Methode: read User werden aus den Files gelesen und instanziert. Dazugehoerige Messages instanziert und
+	 * zugewiesen. Die einzelnen Aktionen sind in den Methoden reviveAllUsers und reviveAllMessagesOfUser implementiert.
 	 * 
-	 * @return Gibt alle User in Form eine Hashmap zurück. Das Schlüsselwort um
-	 *         einen User in der Hashmap zu finden ist der username
+	 * @return Gibt alle User in Form eine Hashmap zurück. Das Schlüsselwort um einen User in der Hashmap zu finden ist
+	 *         der username
 	 */
 	public HashMap<String, User> read() {
 		reviveAllUsers();
@@ -118,11 +111,10 @@ public class StoreUser {
 	}
 
 	/**
-	 * Methode: reviveAllUsers Alle User die in einem File gespeichert sind,
-	 * werden instanziert
+	 * Methode: reviveAllUsers Alle User die in einem File gespeichert sind, werden instanziert
 	 * 
-	 * @return Gibt alle User in Form eine Hashmap zurück. Das Schlüsselwort um
-	 *         einen User in der Hashmap zu finden ist der username
+	 * @return Gibt alle User in Form eine Hashmap zurück. Das Schlüsselwort um einen User in der Hashmap zu finden ist
+	 *         der username
 	 */
 	private HashMap<String, User> reviveAllUsers() {
 		File dir = new File(getDirectoryName());
@@ -142,16 +134,14 @@ public class StoreUser {
 		for (String fileName : listOfAllUserFiles) {
 			ArrayList<String> singleUser = new ArrayList<String>();
 			singleUser = readTextFileToArray(fileName);
-			User newUser = new User(singleUser.get(0), singleUser.get(1), singleUser.get(2), singleUser.get(3),
-					singleUser.get(4));
+			User newUser = new User(singleUser.get(0), singleUser.get(1), singleUser.get(2), singleUser.get(3), singleUser.get(4));
 			userMap.put(newUser.getUserName(), newUser);
 		}
 		return userMap;
 	}
 
 	/**
-	 * List ein einzelnes File und füllt ein Array ab. Jede Zeile ist ein
-	 * Eintrag im Array
+	 * List ein einzelnes File und füllt ein Array ab. Jede Zeile ist ein Eintrag im Array
 	 * 
 	 * @param fileName
 	 * @return Array mit allen Zeile des Files
@@ -176,7 +166,7 @@ public class StoreUser {
 		return singeFileContent;
 	}
 
-	public void removeAllMessagesOfUser(User user){
+	public void removeAllMessagesOfUser(User user) {
 		File dir = new File(getDirectoryName());
 		final String filterUser = getMessagePrefix() + user.getUserName();
 		FilenameFilter filter = new FilenameFilter() {
@@ -184,23 +174,22 @@ public class StoreUser {
 				return name.contains(filterUser);
 			}
 		};
-		//ArrayList<String> allMessagesString = new ArrayList<String>();
+		// ArrayList<String> allMessagesString = new ArrayList<String>();
 		if (dir.isDirectory()) {
 			String[] dirInhalt = dir.list(filter);
 			for (int i = 0; i < dirInhalt.length; i++) {
-				File f = new File(getDirectoryName()+dirInhalt[i]);
-				if (f.delete()==false){
+				File f = new File(getDirectoryName() + dirInhalt[i]);
+				if (f.delete() == false) {
 					System.out.println("Die Nachrichten konnten nicht gelöscht werden");
 				} else {
-					System.out.println("Nachrichten gelöscht!");
+					System.out.println("Nachricht " + f.getName() + " gelöscht!");
 				}
 			}
-		}	
+		}
 	}
-	
+
 	/**
-	 * Instanziert alle Message Objecte eines users und fuegt diese der Inbox
-	 * hinzu.
+	 * Instanziert alle Message Objecte eines users und fuegt diese der Inbox hinzu.
 	 * 
 	 * @param user
 	 */
@@ -225,8 +214,8 @@ public class StoreUser {
 			if (fileName.contains("SMS")) {
 				SMS newSMS;
 				try {
-					newSMS = new SMS(user, userMap.get(singleMessage.get(1)), singleMessage.get(2),
-							new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)), singleMessage.get(4));
+					newSMS = new SMS(user, userMap.get(singleMessage.get(1)), singleMessage.get(2), new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)),
+							singleMessage.get(4));
 					user.addSMS(newSMS);
 				} catch (ParseException e) {
 					e.printStackTrace();
@@ -235,8 +224,8 @@ public class StoreUser {
 			if (fileName.contains("Mail")) {
 				Mail newMail;
 				try {
-					newMail = new Mail(user, userMap.get(singleMessage.get(1)), singleMessage.get(2),
-							new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)), singleMessage.get(4));
+					newMail = new Mail(user, userMap.get(singleMessage.get(1)), singleMessage.get(2), new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)),
+							singleMessage.get(4));
 					user.addMail(newMail);
 				} catch (ParseException e) {
 					e.printStackTrace();
@@ -245,8 +234,8 @@ public class StoreUser {
 			if (fileName.contains("Print")) {
 				Print newPrint;
 				try {
-					newPrint = new Print(user, userMap.get(singleMessage.get(1)), singleMessage.get(2),
-							new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)), singleMessage.get(4));
+					newPrint = new Print(user, userMap.get(singleMessage.get(1)), singleMessage.get(2), new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)),
+							singleMessage.get(4));
 					user.addPrint(newPrint);
 				} catch (ParseException e) {
 					e.printStackTrace();
@@ -298,8 +287,8 @@ public class StoreUser {
 	}
 
 	private String generateFileNameMessage(User user, Message message) {
-		return getDirectoryName() + getMessagePrefix() + user.getUserName() + "_" + message.getClass().getName() + "_"
-				+ sdf.format(message.getDate()) + "_" + message.getId() + ".txt";
+		return getDirectoryName() + getMessagePrefix() + user.getUserName() + "_" + message.getClass().getName() + "_" + sdf.format(message.getDate()) + "_" + message.getId()
+				+ ".txt";
 	}
 
 	private String getDirectoryName() {
@@ -313,14 +302,14 @@ public class StoreUser {
 		HashMap<String, String> numberedList = new HashMap<String, String>();
 		Integer number = 1;
 		for (Map.Entry<String, User> entry : userMap.entrySet()) {
-			numberedList.put(number.toString(),entry.getKey());
+			numberedList.put(number.toString(), entry.getKey());
 			number++;
 		}
 		return numberedList;
 	}
-	
-	//TODO not tested!!
-	public HashSet<String> getAllExistingGroups(){
+
+	// TODO not tested!!
+	public HashSet<String> getAllExistingGroups() {
 		HashSet<String> listOfGroups = new HashSet<String>();
 		for (Map.Entry<String, User> entry : userMap.entrySet()) {
 			listOfGroups.add(entry.getValue().getGroup());
