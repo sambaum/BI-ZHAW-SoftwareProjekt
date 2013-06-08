@@ -1,12 +1,9 @@
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
- * Abgabetermin: Mi-12.06.2013 Dies ist das Haupt-Programm mit der Main-Methode. Von Hier aus werden entweder eine
- * Admin-Session oder eine Mail-Session gestartet
- * 
- * @author Samuel
- * 
+ * Dies ist das Haupt-Programm mit der Main-Methode. Von Hier aus wird entweder eine Admin-Session oder eine
+ * Mail-Session gestartet.
  */
 public class MultiChannel extends MenuBasedClasses {
 
@@ -20,7 +17,7 @@ public class MultiChannel extends MenuBasedClasses {
 	}
 
 	/**
-	 * Main-Methode Es wird eine neue Instanz des Programmst erstellt, Die vorhanden User aus den Files geladen und das
+	 * Main-Methode. Es wird eine neue Instanz des Programmst erstellt, Die vorhanden User aus den Files geladen und das
 	 * Menu angezeigt.
 	 */
 	public static void main(String[] args) {
@@ -31,11 +28,11 @@ public class MultiChannel extends MenuBasedClasses {
 	}
 
 	/**
-	 * Das erste Menu welches dem User gezeigt wird. Von hier aus kann er zwischen Admin- und Mail-Session entscheien.
+	 * Das erste Menu welches dem User gezeigt wird. Von hier aus kann er zwischen Admin- und Mail-Session entscheiden.
 	 * Die entsprechenden Sessions werden hier gestartet
 	 */
 	private void startMenu() {
-		HashMap<String, String> mainMenu = new HashMap<String, String>();
+		TreeMap<String, String> mainMenu = new TreeMap<String, String>();
 		mainMenu.put("1", "User-Administration");
 		mainMenu.put("2", "Mail-Programm");
 		mainMenu.put("3", "Domo-User erstellen");
@@ -62,12 +59,12 @@ public class MultiChannel extends MenuBasedClasses {
 				System.out.println("Beim erstellen der User ist ein Fehler aufgetreten. Zurück zum Hauptmenu.");
 				startMenu();
 			}
-		} 
+		}
 	}
 
 	/**
 	 * Wenn sich der User für eine Mail-Session entscheidet wird hier der User ausgewählt. Dem Benutzer wird eine Liste
-	 * mit bereits vorhandenen Usern zu Auswahl gestellt
+	 * mit bereits vorhandenen Usern zu Auswahl gestellt.
 	 * 
 	 * @return User-Objekt
 	 */
@@ -85,7 +82,7 @@ public class MultiChannel extends MenuBasedClasses {
 	}
 
 	/**
-	 * In Files abgespeicherte User mit Ihren Nachrichten werden hier wieder ins Leben gerufen
+	 * Die in Files abgespeicherten User mit ihren Nachrichten werden hier erstellt.
 	 */
 	private void loadStoredUsers() {
 		System.out.println("Gespeicherte User werden geladen...");
@@ -96,7 +93,8 @@ public class MultiChannel extends MenuBasedClasses {
 	}
 
 	/**
-	 * Eine schön formatierte Ausgabe wird generiert der geladenen Users wird erstellt
+	 * Beim starten des Programmst werden vorhandene User eingelesen. Diese werden hier dargestellt und die Anzahl an
+	 * Nachrichten in der Inbox werden dargestellt.
 	 */
 	private void printUsers() {
 		for (Map.Entry<String, User> entry : getStoreuser().getUserMap().entrySet()) {

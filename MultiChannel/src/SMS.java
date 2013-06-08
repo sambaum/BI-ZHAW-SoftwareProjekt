@@ -6,7 +6,6 @@ import java.util.Date;
  * @author Samuel
  * 
  */
-
 public class SMS extends Message {
 
 	/**
@@ -36,5 +35,4 @@ public class SMS extends Message {
 	public SMS(User recipient, User sender, String message, Date date, String id) {
 		super(recipient, sender, message, date, id);
 	}
-
 }

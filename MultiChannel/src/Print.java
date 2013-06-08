@@ -6,7 +6,6 @@ import java.util.Date;
  * @author Samuel
  * 
  */
-
 public class Print extends Message {
 
 	/**
@@ -36,5 +35,4 @@ public class Print extends Message {
 	public Print(User recipient, User sender, String message, Date date, String id) {
 		super(recipient, sender, message, date, id);
 	}
-
 }

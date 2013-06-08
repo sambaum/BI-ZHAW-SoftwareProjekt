@@ -1,3 +1,6 @@
+/**
+ * Test-Klasse welche bei der Entwicklung verwendet wurde.
+ */
 import java.text.SimpleDateFormat;
 
 import org.junit.After;

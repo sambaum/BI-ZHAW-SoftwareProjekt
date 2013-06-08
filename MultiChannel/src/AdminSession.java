@@ -1,46 +1,51 @@
-/**
- * Die Klasse kümmert sich um die User-Verwaltung. Es können User erasst un gelöscht werden.
- * Der User wird mit einem Menu durch die Aktivitäten geführt.
- */
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.TreeMap;
 
+/**
+ * Die Klasse kümmert sich um die User-Verwaltung. Es können User erasst un gelöscht werden. Der User wird mit einem
+ * Menu durch die Aktivitäten geführt.
+ */
+public class AdminSession extends MenuBasedClasses {
 
-public class AdminSession extends MenuBasedClasses{
-	
-	public void startSession(){
+	/**
+	 * Einstieg in die User-Session.
+	 */
+	public void startSession() {
 		getStoreuser().read();
-		System.out.println("\nWillkommen im Admin-Tool. Was möchten Sie tun?");
+		System.out.println("\nWillkommen im Admin-Tool");
 		chooseWhatToDo();
 	}
-	
+
 	/**
-	 * Start-Menu mit Auswahl
+	 * Start-Menu
 	 */
-	public void chooseWhatToDo(){
-		HashMap<String, String> initMenu = new HashMap<String, String>();
+	public void chooseWhatToDo() {
+		TreeMap<String, String> initMenu = new TreeMap<String, String>();
 		initMenu.put("1", "User erfassen");
 		initMenu.put("2", "User löschen");
+		initMenu.put("3", "Zurück zum Hauptmenu");
 		String antwort = "";
-		while (initMenu.containsKey(antwort)==false){
-			antwort = askAndGetAnswerWithList(initMenu, "\nWas möchten Sie tun?:");
-			if (antwort.equals("1")){
-				createUser();
-			} else if(antwort.equals("2")){
-				deleteuser();
-			} else {
-				System.out.println("Diese Auswahl gibt es nicht");
-			}
+		antwort = askAndGetAnswerWithList(initMenu, "Was möchten Sie tun?");
+		if (antwort.equals("1")) {
+			createUser();
+		} else if (antwort.equals("2")) {
+			deleteuser();
+		} else if (antwort.equals("3")) {
+			return;
 		}
-	}
 
-	private void deleteuser() {
-		// TODO Auto-generated method stub
 	}
 
 	/**
-	 * Hier kann ein neue User erstellt werden.
-	 * Infos werden druch den User eingegeben und anschliessend wird ein neues User-Objekt mit den gelieferten Angaben erstellt
+	 * Ein Auswahl vorhandener User wird angezeigt und kann gelöscht werden
+	 */
+	private void deleteuser() {
+		// TODO User löschen
+	}
+
+	/**
+	 * Hier kann ein neuer User erstellt werden. Details werden durch den User eingegeben und anschliessend wird ein
+	 * neues User-Objekt mit den gelieferten Angaben erstellt.
 	 */
 	private void createUser() {
 		System.out.println("\nEin neuer User wird erfasst...");

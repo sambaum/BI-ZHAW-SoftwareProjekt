@@ -7,17 +7,26 @@ import java.util.Date;
  * @author Samuel
  * 
  */
-
 public class Message {
 
-	// Instanzvariablen
 	private User recipient;
 	private User sender;
 	private String message;
 	private Date date;
 	private String id;
 
-	// Constructor
+	/**
+	 * Konstruktor für eine Nachricht. Die ID wird automatisch vergeben
+	 * 
+	 * @param recipient
+	 *            (Empfänger, welcher die Nachricht erhalten soll)
+	 * @param sender
+	 *            (Absender der Nachricht)
+	 * @param message
+	 *            (Nachricht in Form eines Strings)
+	 * @param date
+	 *            (Datum an welchem die Nachricht versendet werden soll)
+	 */
 	public Message(User recipient, User sender, String message, Date date) {
 		this.recipient = recipient;
 		this.sender = sender;
@@ -25,8 +34,11 @@ public class Message {
 		this.date = date;
 		this.setId(genID());
 	}
-	
-	// Constructor mit ID
+
+	/**
+	 * Gleich wie der erste Konstruktor, nur wird die ID zugewiesen anstatt generiert. Dieser Konstruktor wird gebraucht
+	 * wenn vorhanden Nachricht von der Disk gelesen werden. Die ID soll dabei gleich bleiben
+	 */
 	public Message(User recipient, User sender, String message, Date date, String id) {
 		this.recipient = recipient;
 		this.sender = sender;
@@ -35,13 +47,17 @@ public class Message {
 		this.id = id;
 	}
 
-	private String genID(){
+	/**
+	 * Eine ID wird generiert. Dies kommt garantiert nicht mehr als einmal vor da sie auf einem Datum basiert.
+	 * @return
+	 */
+	private String genID() {
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date now = new Date();
 		return sdfDate.format(now);
 	}
-	
-	//getters and setters
+
+	// getters and setters
 	public User getRecipient() {
 		return recipient;
 	}

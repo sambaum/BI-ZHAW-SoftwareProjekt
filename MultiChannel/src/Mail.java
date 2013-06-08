@@ -5,7 +5,6 @@ import java.util.Date;
  * 
  * @author Samuel ...
  */
-
 public class Mail extends Message {
 
 	/**
@@ -35,5 +34,4 @@ public class Mail extends Message {
 	public Mail(User recipient, User sender, String message, Date date, String id) {
 		super(recipient, sender, message, date, id);
 	}
-
 }

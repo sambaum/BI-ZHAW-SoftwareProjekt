@@ -3,15 +3,13 @@
  * @author Samuel
  * 
  */
-
 public class CheckTel implements Check{
 
 	/**
-	 * TODO: Dokumentation!
+	 * TODO: Dokumentation! (Stefan)
 	 */
 	@Override
 	public boolean check(String stringToCheck) {
 		return stringToCheck.matches("\\b[0-9]*\\b");
 	}
-
 }

@@ -3,14 +3,13 @@ import java.text.SimpleDateFormat;
 
 /**
  * Diese Klasse überprüft ob ein String ein Datum ist.
- * @author Samuel
  * 
+ * @author Samuel
  */
-
-public class CheckDate implements Check{
+public class CheckDate implements Check {
 
 	/**
-	 * TODO: Dokumentation!
+	 * TODO: Dokumentation! (Stefan)
 	 */
 	@Override
 	public boolean check(String stringToCheck) {
@@ -18,19 +17,18 @@ public class CheckDate implements Check{
 	}
 
 	/**
-	 * TODO: Dokumentation!
+	 * TODO: Dokumentation! (Stefan)
 	 */
 	private boolean isDate(String stringToCheck) {
 		try {
-		      //Check date validation
-		      SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-		      dateFormat.setLenient(false);
-		      dateFormat.parse(stringToCheck);
-		      return true;
-		}
-		catch (ParseException e) {
-		      return false;
+			// Check date validation
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+			dateFormat.setLenient(false);
+			dateFormat.parse(stringToCheck);
+			return true;
+		} catch (ParseException e) {
+			return false;
 		}
 	}
-	
+
 }

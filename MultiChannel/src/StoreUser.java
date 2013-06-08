@@ -11,28 +11,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
- * Argumente (Input): Objekt des Typs Message Return-Werte (Output): boolean
- * 
  * Diese Klasse nimmt User Objekte entgegen und speichert diese in einem File ab. Es werden die dazugehoerigen Messages
  * ebenfalls abgespeichert. Alles Files sind in einem Text-Format und koennen mit einem normalen Text-Editor geoeffnet
  * und selber editiert werden.
  * 
- * Diese Klasse liest verhandene Files und erstellt daraus Objekte. Die Files haben folgende Namens-konvention:
- * message_[Message-Typ]_user_[Sende-Datum] Beispiel fuer einen File-Name eines SMS von einem User Frodo:
- * message_sms_frodo_20130501_235526
+ * Diese Klasse liest vorhandene Files und erstellt daraus Objekte. Die Files haben folgende Namens-konvention:
+ * message_user_[Message-Typ]_[Sende-Datum]_ID Beispiel fuer einen File-Name eines SMS von einem User Frodo:
+ * message_frodo_SMS_02.01.2013_20130607181629
  * 
  * @author Samuel
  * 
  */
 public class StoreUser {
 
-	// Variablen welche nach dem Einlesen eine Liste von allen eingelesenen
-	// Usern enthaelt. Zu erkennen mit dem userName.
 	private HashMap<String, User> userMap;
 	private SimpleDateFormat sdf;
 
+	/**
+	 * userMap: Variablen welche eine Liste von allen vorhandenen Usern enthaelt. Zu erkennen mit dem "userName". sdf
+	 * dient zur formattierung des Datums.
+	 */
 	public StoreUser() {
 		this.userMap = new HashMap<String, User>();
 		this.sdf = new SimpleDateFormat("dd.MM.yyyy");
@@ -158,9 +159,7 @@ public class StoreUser {
 				singeFileContent.add(row);
 			}
 			reader.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return singeFileContent;
@@ -189,7 +188,7 @@ public class StoreUser {
 	}
 
 	/**
-	 * Instanziert alle Message Objecte eines users und fuegt diese der Inbox hinzu.
+	 * Instanziert alle Message Objekte eines users und fuegt diese der Inbox hinzu.
 	 * 
 	 * @param user
 	 */
@@ -208,38 +207,26 @@ public class StoreUser {
 				allMessagesString.add(dirInhalt[i]);
 			}
 		}
-
 		for (String fileName : allMessagesString) {
 			ArrayList<String> singleMessage = readTextFileToArray(fileName);
-			if (fileName.contains("SMS")) {
-				SMS newSMS;
-				try {
-					newSMS = new SMS(user, userMap.get(singleMessage.get(1)), singleMessage.get(2), new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)),
+			try {
+				if (fileName.contains("SMS")) {
+					SMS newSMS = new SMS(user, userMap.get(singleMessage.get(1)), singleMessage.get(2), new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)),
 							singleMessage.get(4));
 					user.addSMS(newSMS);
-				} catch (ParseException e) {
-					e.printStackTrace();
 				}
-			}
-			if (fileName.contains("Mail")) {
-				Mail newMail;
-				try {
-					newMail = new Mail(user, userMap.get(singleMessage.get(1)), singleMessage.get(2), new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)),
+				if (fileName.contains("Mail")) {
+					Mail newMail = new Mail(user, userMap.get(singleMessage.get(1)), singleMessage.get(2), new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)),
 							singleMessage.get(4));
 					user.addMail(newMail);
-				} catch (ParseException e) {
-					e.printStackTrace();
 				}
-			}
-			if (fileName.contains("Print")) {
-				Print newPrint;
-				try {
-					newPrint = new Print(user, userMap.get(singleMessage.get(1)), singleMessage.get(2), new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)),
+				if (fileName.contains("Print")) {
+					Print newPrint = new Print(user, userMap.get(singleMessage.get(1)), singleMessage.get(2), new SimpleDateFormat("dd.MM.yyyy").parse(singleMessage.get(3)),
 							singleMessage.get(4));
 					user.addPrint(newPrint);
-				} catch (ParseException e) {
-					e.printStackTrace();
 				}
+			} catch (ParseException e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -262,6 +249,12 @@ public class StoreUser {
 		}
 	}
 
+	/**
+	 * TODO: Doku
+	 * 
+	 * @param user
+	 * @return
+	 */
 	private ArrayList<String> objectToStringUser(User user) {
 		ArrayList<String> list = new ArrayList<String>();
 		list.add(user.getUserName());
@@ -272,6 +265,12 @@ public class StoreUser {
 		return list;
 	}
 
+	/**
+	 * TODO: Doku
+	 * 
+	 * @param message
+	 * @return
+	 */
 	private ArrayList<String> objectToStringMessage(Message message) {
 		ArrayList<String> list = new ArrayList<String>();
 		list.add((message.getRecipient()).getUserName());
@@ -282,15 +281,33 @@ public class StoreUser {
 		return list;
 	}
 
+	/**
+	 * TODO: Doku
+	 * 
+	 * @param user
+	 * @return
+	 */
 	private String generateFileNameUser(User user) {
 		return getDirectoryName() + getUserPrefix() + user.getUserName() + ".txt";
 	}
 
+	/**
+	 * TODO: Doku
+	 * 
+	 * @param user
+	 * @param message
+	 * @return
+	 */
 	private String generateFileNameMessage(User user, Message message) {
 		return getDirectoryName() + getMessagePrefix() + user.getUserName() + "_" + message.getClass().getName() + "_" + sdf.format(message.getDate()) + "_" + message.getId()
 				+ ".txt";
 	}
 
+	/**
+	 * TODO: Doku
+	 * 
+	 * @return
+	 */
 	private String getDirectoryName() {
 		String dirName = "workding_dir/";
 		File dir = new File(dirName);
@@ -298,8 +315,13 @@ public class StoreUser {
 		return dirName;
 	}
 
-	public HashMap<String, String> getUserNumberedList() {
-		HashMap<String, String> numberedList = new HashMap<String, String>();
+	/**
+	 * TODO: Doku
+	 * 
+	 * @return
+	 */
+	public TreeMap<String, String> getUserNumberedList() {
+		TreeMap<String, String> numberedList = new TreeMap<String, String>();
 		Integer number = 1;
 		for (Map.Entry<String, User> entry : userMap.entrySet()) {
 			numberedList.put(number.toString(), entry.getKey());
@@ -308,7 +330,11 @@ public class StoreUser {
 		return numberedList;
 	}
 
-	// TODO not tested!!
+	/**
+	 * TODO: Doku
+	 * 
+	 * @return
+	 */
 	public HashSet<String> getAllExistingGroups() {
 		HashSet<String> listOfGroups = new HashSet<String>();
 		for (Map.Entry<String, User> entry : userMap.entrySet()) {
@@ -317,11 +343,21 @@ public class StoreUser {
 		return listOfGroups;
 	}
 
+	/**
+	 * TODO: Doku
+	 * 
+	 * @return
+	 */
 	private String getMessagePrefix() {
 		String messagePrefix = "message_";
 		return messagePrefix;
 	}
 
+	/**
+	 * TODO: Doku
+	 * 
+	 * @return
+	 */
 	private String getUserPrefix() {
 		String messagePrefix = "user_";
 		return messagePrefix;
