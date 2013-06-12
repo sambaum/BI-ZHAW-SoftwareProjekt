@@ -1,10 +1,11 @@
 /**
- * Diese Klasse überprüft ob ein String eine Telefon-Nummer ist
+ * Diese Klasse ï¿½berprï¿½ft ob ein String eine Telefon-Nummer ist
  * @author Samuel
  * 
  */
 public class CheckTel implements Check{
 
+		
 	/**
 	 * TODO: Dokumentation! (Stefan)
 	 */

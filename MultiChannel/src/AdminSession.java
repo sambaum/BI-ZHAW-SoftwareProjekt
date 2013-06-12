@@ -2,8 +2,8 @@ import java.io.*;
 import java.util.TreeMap;
 
 /**
- * Die Klasse kümmert sich um die User-Verwaltung. Es können User erasst un gelöscht werden. Der User wird mit einem
- * Menu durch die Aktivitäten geführt.
+ * Die Klasse kï¿½mmert sich um die User-Verwaltung. Es kï¿½nnen User erasst un gelï¿½scht werden. Der User wird mit einem
+ * Menu durch die Aktivitï¿½ten gefï¿½hrt.
  */
 public class AdminSession extends MenuBasedClasses{
 
@@ -22,10 +22,10 @@ public class AdminSession extends MenuBasedClasses{
 	public void chooseWhatToDo() {
 		TreeMap<String, String> initMenu = new TreeMap<String, String>();
 		initMenu.put("1", "User erfassen");
-		initMenu.put("2", "User löschen");
-		initMenu.put("3", "Zurück zum Hauptmenu");
+		initMenu.put("2", "User lï¿½schen");
+		initMenu.put("3", "Zurï¿½ck zum Hauptmenu");
 		String antwort = "";
-		antwort = askAndGetAnswerWithList(initMenu, "Was möchten Sie tun?");
+		antwort = askAndGetAnswerWithList(initMenu, "Was mï¿½chten Sie tun?");
 		if (antwort.equals("1")) {
 			createUser();
 		} else if (antwort.equals("2")) {
@@ -37,10 +37,10 @@ public class AdminSession extends MenuBasedClasses{
 	}
 
 	/**
-	 * Ein Auswahl vorhandener User wird angezeigt und kann gelöscht werden
+	 * Ein Auswahl vorhandener User wird angezeigt und kann gelï¿½scht werden
 	 */
 	private void deleteuser() {
-		// TODO User löschen
+		// TODO User lï¿½schen
 	}
 
 	/**
@@ -57,15 +57,16 @@ public class AdminSession extends MenuBasedClasses{
 		if (
 				!new CheckAlphaNum().check(username) || 
 				!new CheckAlphaNum().check(group) || 
-				!new CheckTel(username).check(tel) || 
-				!new CheckEmail(username).check(email) || 
-				!new CheckAlphaNum(username).check(printer) 
+				!new CheckTel().check(tel) || 
+				!new CheckEmail().check(email) || 
+				!new CheckAlphaNum().check(printer) 
 		){
-			System.out.println("Fehlerhafte Eingabe.");
+			System.out.println("Fehlerhafte Eingabe. Der User wurde nicht erstellt");
 		}
 		else{
 			try {
 				getStoreuser().write(new User(username, group, tel, email, printer));
+				System.out.println("Der User" + username + "wurde erfolgreich erstellt");
 			} catch (IOException e) {
 				System.out.println("Bei speichern des Users ist ein Fehler aufgetreten");
 				e.printStackTrace();

@@ -4,6 +4,7 @@ import java.util.TreeMap;
 /**
  * Dies ist das Haupt-Programm mit der Main-Methode. Von Hier aus wird entweder eine Admin-Session oder eine
  * Mail-Session gestartet.
+ * Autoren: Samuel Baumgartner, Stefan Zysset, Christian BlÃ¤ttler
  */
 public class MultiChannel extends MenuBasedClasses {
 
@@ -36,7 +37,7 @@ public class MultiChannel extends MenuBasedClasses {
 		mainMenu.put("1", "User-Administration");
 		mainMenu.put("2", "Mail-Programm");
 		mainMenu.put("3", "Domo-User erstellen");
-		String antwort = askAndGetAnswerWithList(mainMenu, "Wählen Sie Ihre Oberfläche:");
+		String antwort = askAndGetAnswerWithList(mainMenu, "Wï¿½hlen Sie Ihre Oberflï¿½che:");
 		// Eingabe auswerten
 		if (antwort.equals("1")) {
 			System.out.println("\nUser-Administration wird gestartet...");
@@ -56,14 +57,14 @@ public class MultiChannel extends MenuBasedClasses {
 				System.out.println("User wurden erfolgreich erstellt. Das Programm wird beendet");
 				System.exit(0);
 			} else {
-				System.out.println("Beim erstellen der User ist ein Fehler aufgetreten. Zurück zum Hauptmenu.");
+				System.out.println("Beim erstellen der User ist ein Fehler aufgetreten. Zurï¿½ck zum Hauptmenu.");
 				startMenu();
 			}
 		}
 	}
 
 	/**
-	 * Wenn sich der User für eine Mail-Session entscheidet wird hier der User ausgewählt. Dem Benutzer wird eine Liste
+	 * Wenn sich der User fï¿½r eine Mail-Session entscheidet wird hier der User ausgewï¿½hlt. Dem Benutzer wird eine Liste
 	 * mit bereits vorhandenen Usern zu Auswahl gestellt.
 	 * 
 	 * @return User-Objekt
@@ -72,11 +73,11 @@ public class MultiChannel extends MenuBasedClasses {
 		if (getStoreuser().getUserMap().size() > 0) {
 			String antwort = askAndGetAnswerWithList(getStoreuser().getUserNumberedList(), "Bitten geben Sie Ihren Usernamen an. Folgende User stehen zu Wahl: ");
 			menuPrinter(getStoreuser().getUserNumberedList()); // Ein Liste mit vorhanden User wird dargestellt
-			return getStoreuser().getUserMap().get(getStoreuser().getUserNumberedList().get(antwort)); // Ausgewähltes
+			return getStoreuser().getUserMap().get(getStoreuser().getUserNumberedList().get(antwort)); // Ausgewï¿½hltes
 		} else {
 			// Entsprechende Meldung anzeigen wenn keine bestehen User vorhanden sind
-			System.out.println("Es sind keine user vorhanden, erfassen Sie zuerst mindestens einen user. Zurück zum Hauptmenu...");
-			startMenu(); // Zurück zum Hauptmenu
+			System.out.println("Es sind keine user vorhanden, erfassen Sie zuerst mindestens einen user. Zurï¿½ck zum Hauptmenu...");
+			startMenu(); // Zurï¿½ck zum Hauptmenu
 			return null;
 		}
 	}
