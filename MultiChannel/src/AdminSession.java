@@ -1,11 +1,11 @@
-import java.io.IOException;
+import java.io.*;
 import java.util.TreeMap;
 
 /**
  * Die Klasse kümmert sich um die User-Verwaltung. Es können User erasst un gelöscht werden. Der User wird mit einem
  * Menu durch die Aktivitäten geführt.
  */
-public class AdminSession extends MenuBasedClasses {
+public class AdminSession extends MenuBasedClasses{
 
 	/**
 	 * Einstieg in die User-Session.
@@ -54,11 +54,22 @@ public class AdminSession extends MenuBasedClasses {
 		String tel = askAndGetAnswer("Telefon-Nummer:");
 		String email = askAndGetAnswer("E-Mail:");
 		String printer = askAndGetAnswer("Drucker-Namen");
-		try {
-			getStoreuser().write(new User(username, group, tel, email, printer));
-		} catch (IOException e) {
-			System.out.println("Bei speichern des Users ist ein Fehler aufgetreten");
-			e.printStackTrace();
+		if (
+				!new CheckAlphaNum().check(username) || 
+				!new CheckAlphaNum().check(group) || 
+				!new CheckTel(username).check(tel) || 
+				!new CheckEmail(username).check(email) || 
+				!new CheckAlphaNum(username).check(printer) 
+		){
+			System.out.println("Fehlerhafte Eingabe.");
+		}
+		else{
+			try {
+				getStoreuser().write(new User(username, group, tel, email, printer));
+			} catch (IOException e) {
+				System.out.println("Bei speichern des Users ist ein Fehler aufgetreten");
+				e.printStackTrace();
+			}
 		}
 		chooseWhatToDo();
 	}
